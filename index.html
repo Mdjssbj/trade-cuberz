@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Trade Cuberz v6.1</title>
+<title>Trade Cuberz v7 Real Tracker</title>
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,Helvetica,sans-serif}
@@ -12,7 +12,7 @@ background:linear-gradient(135deg,#050816,#091121,#111a35);
 color:#fff;
 padding:20px;
 }
-.container{max-width:1150px;margin:auto}
+.container{max-width:1200px;margin:auto}
 .card{
 background:#11192d;
 padding:28px;
@@ -49,29 +49,26 @@ font-size:15px;
 }
 input,select{
 width:100%;
-padding:16px;
-font-size:20px;
+padding:14px;
+font-size:18px;
 border:none;
 outline:none;
 border-radius:14px;
 background:#222c42;
 color:#fff;
-margin-bottom:14px;
+margin-bottom:12px;
 }
 button{
 width:100%;
-padding:15px;
+padding:14px;
 border:none;
 border-radius:14px;
 font-size:18px;
 font-weight:700;
 cursor:pointer;
 color:#fff;
-margin-bottom:10px;
 background:linear-gradient(90deg,#2f78ff,#8a2dff);
 }
-.greenbtn{background:#18a84c}
-.redbtn{background:#e43d3d}
 .grid2{
 display:grid;
 grid-template-columns:1fr 1fr;
@@ -80,20 +77,6 @@ gap:15px;
 @media(max-width:900px){
 .grid2{grid-template-columns:1fr}
 .logo{font-size:36px}
-}
-table{
-width:100%;
-border-collapse:collapse;
-margin-top:18px;
-}
-th,td{
-padding:14px;
-text-align:left;
-border-bottom:1px solid rgba(255,255,255,.05);
-}
-th{
-font-size:14px;
-color:#9ab1e7;
 }
 .stats{
 display:grid;
@@ -115,8 +98,31 @@ margin-bottom:8px;
 .green{color:#18f58b}
 .gold{color:#ffd84d}
 .blue{color:#38b6ff}
-.red{color:#ff5b5b}
-.doneRow{background:rgba(24,245,139,.08)}
+.red{color:#ff5f5f}
+table{
+width:100%;
+border-collapse:collapse;
+margin-top:18px;
+}
+th,td{
+padding:12px;
+text-align:left;
+border-bottom:1px solid rgba(255,255,255,.05);
+vertical-align:middle;
+}
+th{
+font-size:14px;
+color:#9ab1e7;
+}
+.smallInput{
+width:130px;
+padding:10px;
+font-size:16px;
+margin:0;
+}
+.doneRow{
+background:rgba(24,245,139,.08);
+}
 .footer{
 text-align:center;
 color:#7d8cb8;
@@ -132,7 +138,7 @@ padding:12px;
 <div class="top">
 <div>
 <div class="logo">TRADE CUBERZ</div>
-<div class="sub">Smart Real Planner</div>
+<div class="sub">v7 Real Tracker</div>
 </div>
 <a class="tg" href="https://t.me/+JxZLoij59XBmNTBi" target="_blank">Telegram</a>
 </div>
@@ -140,50 +146,38 @@ padding:12px;
 
 <div class="card">
 
-<label>Брокер</label>
-<select id="broker" onchange="renderCalc()">
-<option value="pocket">Pocket Option</option>
-<option value="binarium">Binarium</option>
-</select>
+<div class="grid2">
 
+<div>
 <label>Валюта</label>
-<select id="currency" onchange="renderCalc();refreshPlan()">
-<option value="₴">UAH Гривня</option>
-<option value="$">USD Долар</option>
-<option value="€">EUR Євро</option>
-<option value="zł">PLN Злотий</option>
+<select id="currency">
+<option value="₴">UAH</option>
+<option value="$">USD</option>
+<option value="€">EUR</option>
+<option value="zł">PLN</option>
 </select>
+</div>
 
-<label>Баланс</label>
-<input type="number" id="sum" value="4000" oninput="renderCalc()">
-
-<table>
-<thead>
-<tr>
-<th>СТУПІНЬ</th>
-<th>%</th>
-<th>СУМА</th>
-</tr>
-</thead>
-<tbody id="calcRows"></tbody>
-</table>
+<div>
+<label>Брокер</label>
+<select id="broker">
+<option>Pocket Option</option>
+<option>Binarium</option>
+</select>
+</div>
 
 </div>
 
-<div class="card">
-
-<h2 style="margin-bottom:18px;">Планувальник</h2>
-
-<label>Початкова сума</label>
+<label>Початковий баланс</label>
 <input type="number" id="start" value="4000">
 
-<label>Цільова сума</label>
+<label>Ціль</label>
 <input type="number" id="goal" value="10000">
 
 <label>Кількість днів</label>
 <input type="number" id="days" value="20">
 
-<button onclick="startPlan()">Старт плану</button>
+<button onclick="createPlan()">Створити план</button>
 
 <div class="stats">
 
@@ -203,24 +197,8 @@ padding:12px;
 </div>
 
 <div class="box">
-<div class="big gold" id="profit">0</div>
-<div>Очікувано завтра</div>
-</div>
-
-</div>
-
-<div class="grid2" style="margin-top:18px;">
-
-<div>
-<label>Поточний баланс (якщо плюс)</label>
-<input type="number" id="realbal" placeholder="Напр. 4300">
-<button class="greenbtn" onclick="closePlusDay()">Закрити день</button>
-</div>
-
-<div>
-<label>Сума збитку</label>
-<input type="number" id="loss" placeholder="Напр. 500">
-<button class="redbtn" onclick="closeLossDay()">Мінусовий день</button>
+<div class="big gold" id="nowbal">0</div>
+<div>Поточний баланс</div>
 </div>
 
 </div>
@@ -228,26 +206,24 @@ padding:12px;
 <table>
 <thead>
 <tr>
-<th>ДЕНЬ</th>
-<th>%</th>
-<th>ОЧІКУВАНА СУМА</th>
+<th>День</th>
+<th>Очікувано</th>
+<th>Реальний баланс</th>
 <th>✔</th>
 </tr>
 </thead>
-<tbody id="planRows"></tbody>
+<tbody id="rows"></tbody>
 </table>
 
 </div>
 
 <div class="footer">
-Trade Cuberz v6.1 © 2026
+Trade Cuberz v7 © 2026
 </div>
 
 </div>
 
 <script>
-const levels=[1,2,5,10];
-
 let current=0;
 let target=0;
 let totalDays=0;
@@ -258,57 +234,17 @@ function cur(){
 return document.getElementById("currency").value;
 }
 
-function minTrade(){
-let broker=document.getElementById("broker").value;
-let c=cur();
-
-if(c=="₴"){
-if(broker=="pocket") return 50;
-if(broker=="binarium") return 25;
-}
-if(c=="$") return 1;
-if(c=="€") return 1;
-if(c=="zł") return 5;
-
-return 1;
-}
-
-function renderCalc(){
-
-let s=parseFloat(document.getElementById("sum").value)||0;
-let min=minTrade();
-let html="";
-
-for(let i=0;i<levels.length;i++){
-
-let val=s*levels[i]/100;
-if(val<min) val=min;
-
-html+=`
-<tr>
-<td class="green">${i+1} ступінь</td>
-<td>${levels[i]}%</td>
-<td class="gold">${cur()}${Math.round(val)}</td>
-</tr>
-`;
-}
-
-document.getElementById("calcRows").innerHTML=html;
-}
-
-function startPlan(){
+function createPlan(){
 
 current=parseFloat(document.getElementById("start").value)||0;
 target=parseFloat(document.getElementById("goal").value)||0;
 totalDays=parseInt(document.getElementById("days").value)||0;
 doneDays=0;
 
-refreshPlan();
+renderPlan();
 }
 
-function refreshPlan(){
-
-if(current<=0||target<=0||totalDays<=0)return;
+function renderPlan(){
 
 let left=Math.max(totalDays-doneDays,1);
 
@@ -317,9 +253,7 @@ rate=(Math.pow(target/current,1/left)-1)*100;
 document.getElementById("daily").innerText=rate.toFixed(2)+"%";
 document.getElementById("done").innerText=doneDays;
 document.getElementById("left").innerText=totalDays-doneDays;
-
-let tomorrow=current*(1+rate/100);
-document.getElementById("profit").innerText=cur()+Math.round(tomorrow);
+document.getElementById("nowbal").innerText=cur()+Math.round(current);
 
 let html="";
 let bal=current;
@@ -329,48 +263,43 @@ for(let i=doneDays+1;i<=totalDays;i++){
 bal=bal*(1+rate/100);
 
 html+=`
-<tr>
+<tr id="row${i}">
 <td>День ${i}</td>
-<td>${rate.toFixed(2)}%</td>
 <td class="gold">${cur()}${Math.round(bal)}</td>
-<td><input type="checkbox"></td>
+<td>
+<input class="smallInput" type="number" id="real${i}" placeholder="Факт">
+</td>
+<td>
+<input type="checkbox" onchange="finishDay(${i},this)">
+</td>
 </tr>
 `;
 }
 
-document.getElementById("planRows").innerHTML=html;
+document.getElementById("rows").innerHTML=html;
 }
 
-function closePlusDay(){
+function finishDay(day,box){
 
-let real=parseFloat(document.getElementById("realbal").value)||0;
-if(real<=0)return;
+if(!box.checked)return;
+
+let real=parseFloat(document.getElementById("real"+day).value)||0;
+
+if(real<=0){
+alert("Введи реальний баланс");
+box.checked=false;
+return;
+}
 
 current=real;
 doneDays++;
 
-document.getElementById("realbal").value="";
+document.getElementById("row"+day).classList.add("doneRow");
 
-refreshPlan();
+renderPlan();
 }
 
-function closeLossDay(){
-
-let loss=parseFloat(document.getElementById("loss").value)||0;
-if(loss<=0)return;
-
-current=current-loss;
-if(current<1)current=1;
-
-doneDays++;
-
-document.getElementById("loss").value="";
-
-refreshPlan();
-}
-
-renderCalc();
-startPlan();
+createPlan();
 </script>
 
 </body>
