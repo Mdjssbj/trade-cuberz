@@ -17,6 +17,8 @@ body{background:linear-gradient(135deg,#050816,#091121,#111a35);color:#fff;paddi
 label{display:block;margin-bottom:8px;color:#8ea3d8;font-size:15px}
 input,select{width:100%;padding:14px;font-size:18px;border:none;outline:none;border-radius:14px;background:#222c42;color:#fff;margin-bottom:12px}
 button{width:100%;padding:14px;border:none;border-radius:14px;font-size:18px;font-weight:700;cursor:pointer;color:#fff;background:linear-gradient(90deg,#2f78ff,#8a2dff);margin-top:6px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:15px}
+@media(max-width:900px){.grid2{grid-template-columns:1fr}}
 .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin-top:18px}
 .box{background:#0b1328;padding:18px;border-radius:18px;text-align:center}
 .big{font-size:28px;font-weight:800;margin-bottom:8px}
@@ -45,13 +47,27 @@ th{font-size:14px;color:#9ab1e7}
 
 <div class="card">
 
+<div class="grid2">
+
+<div>
+<label>Брокер</label>
+<select id="broker" onchange="renderAll()">
+<option value="pocket">Pocket Option</option>
+<option value="binarium">Binarium</option>
+</select>
+</div>
+
+<div>
 <label>Валюта</label>
-<select id="currency" onchange="renderPlan();renderHistory();">
+<select id="currency" onchange="renderAll()">
 <option value="₴">UAH ₴</option>
 <option value="$">USD $</option>
 <option value="€">EUR €</option>
 <option value="zł">PLN zł</option>
 </select>
+</div>
+
+</div>
 
 <label>Початковий баланс</label>
 <input type="number" id="start" value="4000">
@@ -61,6 +77,9 @@ th{font-size:14px;color:#9ab1e7}
 
 <label>Кількість днів</label>
 <input type="number" id="days" value="20">
+
+<label>Payout %</label>
+<input type="number" id="payout" value="80">
 
 <button onclick="createPlan()">Створити план</button>
 <button onclick="toggleHistory()">Показати весь шлях</button>
@@ -75,6 +94,18 @@ th{font-size:14px;color:#9ab1e7}
 <table>
 <thead>
 <tr>
+<th>Ступінь</th>
+<th>%</th>
+<th>Сума</th>
+<th>Угод до цілі</th>
+</tr>
+</thead>
+<tbody id="stepsRows"></tbody>
+</table>
+
+<table>
+<thead>
+<tr>
 <th>День</th>
 <th>Очікувано</th>
 <th>Реальний баланс / збиток</th>
@@ -85,6 +116,7 @@ th{font-size:14px;color:#9ab1e7}
 </table>
 
 <div id="historyBox" class="hidden">
+
 <h3 style="margin-top:25px;color:#18f58b;">Історія шляху</h3>
 
 <table>
@@ -109,8 +141,27 @@ th{font-size:14px;color:#9ab1e7}
 <script>
 let current=0,target=0,totalDays=0,doneDays=0,rate=0,history=[];
 
+const levels=[1,2,5,10];
+
 function cur(){
 return document.getElementById("currency").value;
+}
+
+function minTrade(){
+
+let broker=document.getElementById("broker").value;
+let currency=cur();
+
+if(currency=="₴"){
+if(broker=="pocket") return 50;
+if(broker=="binarium") return 25;
+}
+
+if(currency=="$") return 1;
+if(currency=="€") return 1;
+if(currency=="zł") return 5;
+
+return 1;
 }
 
 function createPlan(){
@@ -119,7 +170,13 @@ target=parseFloat(document.getElementById("goal").value)||0;
 totalDays=parseInt(document.getElementById("days").value)||0;
 doneDays=0;
 history=[];
+renderAll();
+}
+
+function renderAll(){
 renderPlan();
+renderSteps();
+renderHistory();
 }
 
 function renderPlan(){
@@ -153,7 +210,35 @@ html+=`
 }
 
 document.getElementById("rows").innerHTML=html;
-renderHistory();
+}
+
+function renderSteps(){
+
+let payout=(parseFloat(document.getElementById("payout").value)||80)/100;
+let min=minTrade();
+let dayGoal=current*(rate/100);
+
+let html="";
+
+for(let i=0;i<levels.length;i++){
+
+let raw=current*(levels[i]/100);
+let stake=raw<min ? min : raw;
+
+let profit=stake*payout;
+let trades=Math.ceil(dayGoal/profit);
+
+html+=`
+<tr>
+<td>${i+1}</td>
+<td>${levels[i]}%</td>
+<td class="gold">${cur()}${Math.round(stake)}</td>
+<td class="green">${trades}</td>
+</tr>
+`;
+}
+
+document.getElementById("stepsRows").innerHTML=html;
 }
 
 function finishDay(day,box){
@@ -163,7 +248,6 @@ if(!box.checked)return;
 let val=document.getElementById("real"+day).value.trim();
 
 if(val==""){
-alert("Введи значення");
 box.checked=false;
 return;
 }
@@ -190,7 +274,8 @@ balance:Math.round(current)
 });
 
 doneDays++;
-renderPlan();
+
+renderAll();
 }
 
 function renderHistory(){
@@ -202,7 +287,7 @@ for(let i=0;i<history.length;i++){
 html+=`
 <tr>
 <td>День ${history[i].day}</td>
-<td>${history[i].input.startsWith('-') ? history[i].input : cur()+history[i].input}</td>
+<td>${history[i].input}</td>
 <td>${cur()}${history[i].balance}</td>
 </tr>
 `;
