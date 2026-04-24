@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Trade Cuberz v3</title>
+<title>Trade Cuberz v4</title>
 
 <style>
 *{
@@ -60,23 +60,14 @@ color:#fff;
 font-weight:700;
 }
 
-.grid2{
-display:grid;
-grid-template-columns:2fr 1fr;
-gap:20px;
-}
-
-@media(max-width:900px){
-.grid2{grid-template-columns:1fr;}
-}
-
 label{
 display:block;
 margin-bottom:8px;
 color:#8ea3d8;
+font-size:15px;
 }
 
-input{
+input,select{
 width:100%;
 padding:16px;
 font-size:22px;
@@ -88,35 +79,11 @@ color:#fff;
 margin-bottom:15px;
 }
 
-button{
-padding:15px;
-border:none;
-border-radius:14px;
-font-size:18px;
-font-weight:700;
-cursor:pointer;
-color:#fff;
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button{
+-webkit-appearance:none;
+margin:0;
 }
-
-.mainbtn{
-width:100%;
-background:linear-gradient(90deg,#2f78ff,#8a2dff);
-}
-
-.quick{
-display:flex;
-gap:12px;
-flex-wrap:wrap;
-}
-
-.quick button{
-flex:1;
-min-width:100px;
-}
-
-.b1{background:#2f78ff;}
-.b2{background:#20b14d;}
-.b3{background:#8a2dff;}
 
 table{
 width:100%;
@@ -163,6 +130,18 @@ margin-bottom:8px;
 background:rgba(24,245,139,.08);
 }
 
+button{
+padding:15px;
+border:none;
+border-radius:14px;
+font-size:18px;
+font-weight:700;
+cursor:pointer;
+color:#fff;
+background:linear-gradient(90deg,#2f78ff,#8a2dff);
+width:100%;
+}
+
 .footer{
 text-align:center;
 color:#7d8cb8;
@@ -187,14 +166,16 @@ padding:12px;
 
 <div class="card">
 
-<label>Баланс</label>
-<input type="number" id="sum" value="1000" oninput="renderCalc()">
+<label>Валюта</label>
+<select id="currency" onchange="renderCalc();buildPlan();">
+<option value="$">USD Долар</option>
+<option value="₴">UAH Гривня</option>
+<option value="€">EUR Євро</option>
+<option value="zł">PLN Злотий</option>
+</select>
 
-<div class="quick">
-<button class="b1" onclick="setBal(100)">$100</button>
-<button class="b2" onclick="setBal(500)">$500</button>
-<button class="b3" onclick="setBal(1000)">$1000</button>
-</div>
+<label>Баланс</label>
+<input type="number" id="sum" value="900" oninput="renderCalc()">
 
 <table>
 <thead>
@@ -215,15 +196,15 @@ padding:12px;
 <h2 style="margin-bottom:18px;">Планувальник цілей</h2>
 
 <label>Початкова сума</label>
-<input type="number" id="start" value="1000">
+<input type="number" id="start" value="900">
 
 <label>Цільова сума</label>
-<input type="number" id="goal" value="15000">
+<input type="number" id="goal" value="5000">
 
 <label>Кількість днів</label>
-<input type="number" id="days" value="60">
+<input type="number" id="days" value="30">
 
-<button class="mainbtn" onclick="buildPlan()">Розрахувати план</button>
+<button onclick="buildPlan()">Розрахувати план</button>
 
 <div class="stats">
 
@@ -255,7 +236,7 @@ padding:12px;
 <th>ДЕНЬ</th>
 <th>%</th>
 <th>ОЧІКУВАНА СУМА</th>
-<th>ВИКОНАНО</th>
+<th>✔</th>
 </tr>
 </thead>
 
@@ -265,7 +246,7 @@ padding:12px;
 </div>
 
 <div class="footer">
-Trade Cuberz v3 © 2026
+Trade Cuberz v4 © 2026
 </div>
 
 </div>
@@ -277,15 +258,13 @@ let totalDays=0;
 let doneDays=0;
 let rate=0;
 
-function setBal(v){
-document.getElementById("sum").value=v;
-renderCalc();
+function cur(){
+return document.getElementById("currency").value;
 }
 
 function renderCalc(){
 
 let s=parseFloat(document.getElementById("sum").value)||0;
-
 let html="";
 
 for(let i=0;i<levels.length;i++){
@@ -296,7 +275,7 @@ html+=`
 <tr>
 <td class="green">${i+1} ступінь</td>
 <td>${levels[i]}%</td>
-<td class="gold">$${val}</td>
+<td class="gold">${cur()}${val}</td>
 </tr>
 `;
 }
@@ -311,12 +290,14 @@ let goal=parseFloat(document.getElementById("goal").value)||0;
 totalDays=parseInt(document.getElementById("days").value)||0;
 doneDays=0;
 
+if(start<=0||goal<=0||totalDays<=0)return;
+
 rate=(Math.pow(goal/start,1/totalDays)-1)*100;
 
 document.getElementById("daily").innerText=rate.toFixed(3)+"%";
 
-let html="";
 let bal=start;
+let html="";
 
 for(let i=1;i<=totalDays;i++){
 
@@ -326,7 +307,7 @@ html+=`
 <tr id="row${i}">
 <td>День ${i}</td>
 <td>${rate.toFixed(3)}%</td>
-<td class="gold">$${bal.toFixed(2)}</td>
+<td class="gold">${cur()}${bal.toFixed(2)}</td>
 <td><input type="checkbox" onchange="markDay(${i},this)"></td>
 </tr>
 `;
