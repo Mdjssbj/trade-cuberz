@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Trade Cuberz</title>
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial, Helvetica, sans-serif;
+}
+
+body{
+background:#0b0f1a;
+color:white;
+padding:30px;
+}
+
+.container{
+max-width:700px;
+margin:auto;
+}
+
+.card{
+background:#131b2e;
+padding:25px;
+border-radius:20px;
+margin-bottom:20px;
+box-shadow:0 0 20px rgba(0,0,0,.35);
+}
+
+h1{
+font-size:38px;
+margin-bottom:10px;
+color:#18f58b;
+}
+
+h2{
+margin-bottom:15px;
+color:#6c4cff;
+}
+
+p{
+margin-bottom:15px;
+color:#ccc;
+}
+
+input{
+width:100%;
+padding:14px;
+border:none;
+outline:none;
+border-radius:12px;
+margin-bottom:15px;
+font-size:18px;
+background:#0b0f1a;
+color:white;
+}
+
+button{
+width:100%;
+padding:14px;
+border:none;
+border-radius:12px;
+background:#18f58b;
+color:#000;
+font-weight:bold;
+font-size:18px;
+cursor:pointer;
+}
+
+button:hover{
+opacity:.9;
+}
+
+.result{
+margin-top:15px;
+line-height:1.8;
+color:#fff;
+}
+
+.green{
+color:#18f58b;
+}
+
+.red{
+color:#ff5757;
+}
+
+.footer{
+text-align:center;
+margin-top:20px;
+color:#777;
+font-size:14px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="card">
+<h1>Trade Cuberz</h1>
+<p>Smart Binary Trading Calculator</p>
+</div>
+
+<div class="card">
+<h2>Bank Calculator</h2>
+
+<input type="number" id="balance" placeholder="Введи баланс $">
+
+<button onclick="calculate()">Розрахувати</button>
+
+<div class="result" id="result"></div>
+</div>
+
+<div class="card">
+<h2>Today Session Plan</h2>
+
+<div class="result" id="plan">
+Goal: <span class="green">+$20</span><br>
+Max Loss: <span class="red">-$10</span><br>
+Trades Limit: 5<br>
+Rule: 3 losses = STOP
+</div>
+</div>
+
+<div class="footer">
+Trade Cuberz © 2026
+</div>
+
+</div>
+
+<script>
+function calculate(){
+
+let balance = document.getElementById("balance").value;
+
+if(balance == "" || balance <= 0){
+alert("Введи баланс");
+return;
+}
+
+balance = parseFloat(balance);
+
+let one = (balance * 0.01).toFixed(2);
+let two = (balance * 0.02).toFixed(2);
+let five = (balance * 0.05).toFixed(2);
+let ten = (balance * 0.10).toFixed(2);
+
+document.getElementById("result").innerHTML = `
+1% Stake = <span class="green">$${one}</span><br>
+2% Stake = <span class="green">$${two}</span><br>
+5% Stake = <span class="green">$${five}</span><br>
+10% Stake = <span class="green">$${ten}</span><br><br>
+
+Recommended First Trade: <span class="green">$${one}</span><br>
+Max Daily Risk: <span class="red">$${five}</span>
+`;
+}
+</script>
+
+</body>
+</html>
