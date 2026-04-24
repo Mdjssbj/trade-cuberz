@@ -3,27 +3,16 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Trade Cuberz v4</title>
+<title>Trade Cuberz v6 Broker Edition</title>
 
 <style>
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:Arial,Helvetica,sans-serif;
-}
-
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,Helvetica,sans-serif}
 body{
 background:linear-gradient(135deg,#050816,#091121,#111a35);
 color:#fff;
 padding:20px;
 }
-
-.container{
-max-width:1150px;
-margin:auto;
-}
-
+.container{max-width:1150px;margin:auto}
 .card{
 background:#11192d;
 padding:28px;
@@ -31,7 +20,6 @@ border-radius:22px;
 margin-bottom:22px;
 box-shadow:0 0 25px rgba(0,0,0,.35);
 }
-
 .top{
 display:flex;
 justify-content:space-between;
@@ -39,18 +27,12 @@ align-items:center;
 gap:15px;
 flex-wrap:wrap;
 }
-
 .logo{
 font-size:48px;
 font-weight:800;
 color:#18f58b;
 }
-
-.sub{
-margin-top:6px;
-color:#8ea3d8;
-}
-
+.sub{color:#8ea3d8;margin-top:6px}
 .tg{
 background:#2f78ff;
 padding:14px 24px;
@@ -59,14 +41,12 @@ text-decoration:none;
 color:#fff;
 font-weight:700;
 }
-
 label{
 display:block;
 margin-bottom:8px;
 color:#8ea3d8;
 font-size:15px;
 }
-
 input,select{
 width:100%;
 padding:16px;
@@ -78,58 +58,41 @@ background:#222c42;
 color:#fff;
 margin-bottom:15px;
 }
-
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button{
--webkit-appearance:none;
-margin:0;
-}
-
 table{
 width:100%;
 border-collapse:collapse;
 margin-top:20px;
 }
-
 th,td{
 padding:14px;
 text-align:left;
 border-bottom:1px solid rgba(255,255,255,.05);
 }
-
 th{
 font-size:14px;
 color:#9ab1e7;
 }
-
+.green{color:#18f58b}
+.gold{color:#ffd84d}
+.red{color:#ff5f5f}
+.blue{color:#38b6ff}
 .stats{
 display:grid;
 grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
 gap:14px;
 margin-top:18px;
 }
-
 .box{
 background:#0b1328;
 padding:18px;
 border-radius:18px;
 text-align:center;
 }
-
 .big{
 font-size:32px;
 font-weight:800;
 margin-bottom:8px;
 }
-
-.green{color:#18f58b;}
-.gold{color:#ffd84d;}
-.blue{color:#38b6ff;}
-
-.doneRow{
-background:rgba(24,245,139,.08);
-}
-
 button{
 padding:15px;
 border:none;
@@ -138,38 +101,54 @@ font-size:18px;
 font-weight:700;
 cursor:pointer;
 color:#fff;
-background:linear-gradient(90deg,#2f78ff,#8a2dff);
 width:100%;
+background:linear-gradient(90deg,#2f78ff,#8a2dff);
+margin-bottom:10px;
 }
-
+.redbtn{background:#e43d3d}
+.doneRow{background:rgba(24,245,139,.08)}
 .footer{
 text-align:center;
 color:#7d8cb8;
 padding:12px;
 }
+.grid2{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:15px;
+}
+@media(max-width:900px){
+.grid2{grid-template-columns:1fr}
+.logo{font-size:38px}
+}
 </style>
 </head>
-
 <body>
+
 <div class="container">
 
 <div class="card">
 <div class="top">
 <div>
 <div class="logo">TRADE CUBERZ</div>
-<div class="sub">Професійний торговий калькулятор</div>
+<div class="sub">Broker Edition Calculator</div>
 </div>
-
 <a class="tg" href="https://t.me/+JxZLoij59XBmNTBi" target="_blank">Telegram</a>
 </div>
 </div>
 
 <div class="card">
 
+<label>Брокер</label>
+<select id="broker" onchange="renderCalc()">
+<option value="pocket">Pocket Option</option>
+<option value="binarium">Binarium</option>
+</select>
+
 <label>Валюта</label>
 <select id="currency" onchange="renderCalc();buildPlan();">
-<option value="$">USD Долар</option>
 <option value="₴">UAH Гривня</option>
+<option value="$">USD Долар</option>
 <option value="€">EUR Євро</option>
 <option value="zł">PLN Злотий</option>
 </select>
@@ -185,7 +164,6 @@ padding:12px;
 <th>СУМА</th>
 </tr>
 </thead>
-
 <tbody id="calcRows"></tbody>
 </table>
 
@@ -193,7 +171,7 @@ padding:12px;
 
 <div class="card">
 
-<h2 style="margin-bottom:18px;">Планувальник цілей</h2>
+<h2 style="margin-bottom:18px;">Recovery Planner</h2>
 
 <label>Початкова сума</label>
 <input type="number" id="start" value="900">
@@ -230,6 +208,17 @@ padding:12px;
 
 </div>
 
+<div class="grid2" style="margin-top:20px;">
+<div>
+<button onclick="winDay()">+ Плюсовий день</button>
+</div>
+
+<div>
+<input type="number" id="loss" placeholder="Сума збитку">
+<button class="redbtn" onclick="lossDay()">- Мінусовий день</button>
+</div>
+</div>
+
 <table>
 <thead>
 <tr>
@@ -239,14 +228,13 @@ padding:12px;
 <th>✔</th>
 </tr>
 </thead>
-
 <tbody id="planRows"></tbody>
 </table>
 
 </div>
 
 <div class="footer">
-Trade Cuberz v4 © 2026
+Trade Cuberz v6 © 2026
 </div>
 
 </div>
@@ -257,25 +245,46 @@ const levels=[1,2,5,10];
 let totalDays=0;
 let doneDays=0;
 let rate=0;
+let current=0;
+let target=0;
 
 function cur(){
 return document.getElementById("currency").value;
 }
 
+function minTrade(){
+
+let broker=document.getElementById("broker").value;
+let currency=cur();
+
+if(currency=="₴"){
+if(broker=="pocket") return 50;
+if(broker=="binarium") return 25;
+}
+
+if(currency=="$") return 1;
+if(currency=="€") return 1;
+if(currency=="zł") return 5;
+
+return 1;
+}
+
 function renderCalc(){
 
 let s=parseFloat(document.getElementById("sum").value)||0;
+let min=minTrade();
 let html="";
 
 for(let i=0;i<levels.length;i++){
 
-let val=(s*levels[i]/100).toFixed(2);
+let raw=s*levels[i]/100;
+let val=raw<min ? min : raw;
 
 html+=`
 <tr>
 <td class="green">${i+1} ступінь</td>
 <td>${levels[i]}%</td>
-<td class="gold">${cur()}${val}</td>
+<td class="gold">${cur()}${val.toFixed(2)}</td>
 </tr>
 `;
 }
@@ -285,63 +294,77 @@ document.getElementById("calcRows").innerHTML=html;
 
 function buildPlan(){
 
-let start=parseFloat(document.getElementById("start").value)||0;
-let goal=parseFloat(document.getElementById("goal").value)||0;
+current=parseFloat(document.getElementById("start").value)||0;
+target=parseFloat(document.getElementById("goal").value)||0;
 totalDays=parseInt(document.getElementById("days").value)||0;
 doneDays=0;
 
-if(start<=0||goal<=0||totalDays<=0)return;
+updatePlan();
+}
 
-rate=(Math.pow(goal/start,1/totalDays)-1)*100;
+function updatePlan(){
+
+if(current<=0||target<=0||totalDays<=0)return;
+
+let left=Math.max(totalDays-doneDays,1);
+
+rate=(Math.pow(target/current,1/left)-1)*100;
 
 document.getElementById("daily").innerText=rate.toFixed(3)+"%";
+document.getElementById("done").innerText=doneDays;
+document.getElementById("left").innerText=totalDays-doneDays;
+document.getElementById("prog").innerText=((doneDays/totalDays)*100).toFixed(1)+"%";
 
-let bal=start;
+let bal=current;
 let html="";
 
-for(let i=1;i<=totalDays;i++){
+for(let i=doneDays+1;i<=totalDays;i++){
 
 bal=bal*(1+rate/100);
 
 html+=`
-<tr id="row${i}">
+<tr>
 <td>День ${i}</td>
 <td>${rate.toFixed(3)}%</td>
 <td class="gold">${cur()}${bal.toFixed(2)}</td>
-<td><input type="checkbox" onchange="markDay(${i},this)"></td>
+<td><input type="checkbox" onchange="markDone(this)"></td>
 </tr>
 `;
 }
 
 document.getElementById("planRows").innerHTML=html;
-
-updateStats();
 }
 
-function markDay(day,box){
-
-let row=document.getElementById("row"+day);
-
+function markDone(box){
 if(box.checked){
-row.classList.add("doneRow");
+box.parentElement.parentElement.classList.add("doneRow");
+}
+}
+
+function winDay(){
+
+if(doneDays>=totalDays)return;
+
+current=current*(1+rate/100);
 doneDays++;
-}else{
-row.classList.remove("doneRow");
-doneDays--;
-if(doneDays<0)doneDays=0;
+
+updatePlan();
 }
 
-updateStats();
-}
+function lossDay(){
 
-function updateStats(){
+let loss=parseFloat(document.getElementById("loss").value)||0;
 
-let left=totalDays-doneDays;
-let prog=(doneDays/totalDays*100)||0;
+if(loss<=0)return;
 
-document.getElementById("done").innerText=doneDays;
-document.getElementById("left").innerText=left;
-document.getElementById("prog").innerText=prog.toFixed(1)+"%";
+current=current-loss;
+if(current<1)current=1;
+
+doneDays++;
+
+document.getElementById("loss").value="";
+
+updatePlan();
 }
 
 renderCalc();
