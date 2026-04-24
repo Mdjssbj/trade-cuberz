@@ -3,23 +3,30 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Trade Cuberz v7 Real Tracker</title>
+<title>Trade Cuberz — План калькулятор розрахунку</title>
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,Helvetica,sans-serif}
+
 body{
 background:linear-gradient(135deg,#050816,#091121,#111a35);
 color:#fff;
 padding:20px;
 }
-.container{max-width:1200px;margin:auto}
+
+.container{
+max-width:1200px;
+margin:auto;
+}
+
 .card{
 background:#11192d;
-padding:28px;
+padding:26px;
 border-radius:22px;
 margin-bottom:22px;
 box-shadow:0 0 25px rgba(0,0,0,.35);
 }
+
 .top{
 display:flex;
 justify-content:space-between;
@@ -27,12 +34,20 @@ align-items:center;
 gap:15px;
 flex-wrap:wrap;
 }
+
 .logo{
-font-size:46px;
+font-size:38px;
 font-weight:800;
 color:#18f58b;
+line-height:1;
 }
-.sub{color:#8ea3d8;margin-top:6px}
+
+.sub{
+margin-top:10px;
+font-size:18px;
+color:#8ea3d8;
+}
+
 .tg{
 background:#2f78ff;
 padding:14px 24px;
@@ -41,12 +56,14 @@ text-decoration:none;
 color:#fff;
 font-weight:700;
 }
+
 label{
 display:block;
 margin-bottom:8px;
 color:#8ea3d8;
 font-size:15px;
 }
+
 input,select{
 width:100%;
 padding:14px;
@@ -58,6 +75,7 @@ background:#222c42;
 color:#fff;
 margin-bottom:12px;
 }
+
 button{
 width:100%;
 padding:14px;
@@ -69,60 +87,72 @@ cursor:pointer;
 color:#fff;
 background:linear-gradient(90deg,#2f78ff,#8a2dff);
 }
+
 .grid2{
 display:grid;
 grid-template-columns:1fr 1fr;
 gap:15px;
 }
+
 @media(max-width:900px){
 .grid2{grid-template-columns:1fr}
-.logo{font-size:36px}
+.logo{font-size:30px}
 }
+
 .stats{
 display:grid;
 grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
 gap:14px;
 margin-top:18px;
 }
+
 .box{
 background:#0b1328;
 padding:18px;
 border-radius:18px;
 text-align:center;
 }
+
 .big{
-font-size:30px;
+font-size:28px;
 font-weight:800;
 margin-bottom:8px;
 }
+
 .green{color:#18f58b}
 .gold{color:#ffd84d}
 .blue{color:#38b6ff}
 .red{color:#ff5f5f}
+
 table{
 width:100%;
 border-collapse:collapse;
 margin-top:18px;
 }
+
 th,td{
 padding:12px;
 text-align:left;
 border-bottom:1px solid rgba(255,255,255,.05);
 vertical-align:middle;
 }
+
 th{
 font-size:14px;
 color:#9ab1e7;
 }
+
 .smallInput{
-width:130px;
+width:150px;
 padding:10px;
 font-size:16px;
 margin:0;
 }
+
 .doneRow{
 background:rgba(24,245,139,.08);
 }
+
 .footer{
 text-align:center;
 color:#7d8cb8;
@@ -138,8 +168,9 @@ padding:12px;
 <div class="top">
 <div>
 <div class="logo">TRADE CUBERZ</div>
-<div class="sub">v7 Real Tracker</div>
+<div class="sub">План калькулятор розрахунку</div>
 </div>
+
 <a class="tg" href="https://t.me/+JxZLoij59XBmNTBi" target="_blank">Telegram</a>
 </div>
 </div>
@@ -160,7 +191,7 @@ padding:12px;
 
 <div>
 <label>Брокер</label>
-<select id="broker">
+<select>
 <option>Pocket Option</option>
 <option>Binarium</option>
 </select>
@@ -198,7 +229,7 @@ padding:12px;
 
 <div class="box">
 <div class="big gold" id="nowbal">0</div>
-<div>Поточний баланс</div>
+<div>Баланс</div>
 </div>
 
 </div>
@@ -208,17 +239,18 @@ padding:12px;
 <tr>
 <th>День</th>
 <th>Очікувано</th>
-<th>Реальний баланс</th>
+<th>Реальний баланс / збиток</th>
 <th>✔</th>
 </tr>
 </thead>
+
 <tbody id="rows"></tbody>
 </table>
 
 </div>
 
 <div class="footer">
-Trade Cuberz v7 © 2026
+Trade Cuberz © 2026
 </div>
 
 </div>
@@ -267,7 +299,7 @@ html+=`
 <td>День ${i}</td>
 <td class="gold">${cur()}${Math.round(bal)}</td>
 <td>
-<input class="smallInput" type="number" id="real${i}" placeholder="Факт">
+<input class="smallInput" type="text" id="real${i}" placeholder="4200 або -200">
 </td>
 <td>
 <input type="checkbox" onchange="finishDay(${i},this)">
@@ -283,15 +315,30 @@ function finishDay(day,box){
 
 if(!box.checked)return;
 
-let real=parseFloat(document.getElementById("real"+day).value)||0;
+let val=document.getElementById("real"+day).value.trim();
 
-if(real<=0){
-alert("Введи реальний баланс");
+if(val==""){
+alert("Введи баланс або збиток");
 box.checked=false;
 return;
 }
 
-current=real;
+let num=parseFloat(val);
+
+if(isNaN(num)){
+alert("Невірне значення");
+box.checked=false;
+return;
+}
+
+/* якщо мінусове число = збиток */
+if(num<0){
+current=current+num;
+if(current<1) current=1;
+}else{
+current=num;
+}
+
 doneDays++;
 
 document.getElementById("row"+day).classList.add("doneRow");
