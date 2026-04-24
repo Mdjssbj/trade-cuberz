@@ -3,22 +3,16 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Trade Cuberz — План калькулятор розрахунку</title>
+<title>Trade Cuberz</title>
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,Helvetica,sans-serif}
-
 body{
 background:linear-gradient(135deg,#050816,#091121,#111a35);
 color:#fff;
 padding:20px;
 }
-
-.container{
-max-width:1200px;
-margin:auto;
-}
-
+.container{max-width:1200px;margin:auto}
 .card{
 background:#11192d;
 padding:26px;
@@ -26,7 +20,6 @@ border-radius:22px;
 margin-bottom:22px;
 box-shadow:0 0 25px rgba(0,0,0,.35);
 }
-
 .top{
 display:flex;
 justify-content:space-between;
@@ -34,20 +27,16 @@ align-items:center;
 gap:15px;
 flex-wrap:wrap;
 }
-
 .logo{
 font-size:38px;
 font-weight:800;
 color:#18f58b;
-line-height:1;
 }
-
 .sub{
 margin-top:10px;
 font-size:18px;
 color:#8ea3d8;
 }
-
 .tg{
 background:#2f78ff;
 padding:14px 24px;
@@ -56,14 +45,12 @@ text-decoration:none;
 color:#fff;
 font-weight:700;
 }
-
 label{
 display:block;
 margin-bottom:8px;
 color:#8ea3d8;
 font-size:15px;
 }
-
 input,select{
 width:100%;
 padding:14px;
@@ -75,7 +62,6 @@ background:#222c42;
 color:#fff;
 margin-bottom:12px;
 }
-
 button{
 width:100%;
 padding:14px;
@@ -86,73 +72,54 @@ font-weight:700;
 cursor:pointer;
 color:#fff;
 background:linear-gradient(90deg,#2f78ff,#8a2dff);
+margin-top:6px;
 }
-
-.grid2{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:15px;
-}
-
-@media(max-width:900px){
-.grid2{grid-template-columns:1fr}
-.logo{font-size:30px}
-}
-
 .stats{
 display:grid;
 grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
 gap:14px;
 margin-top:18px;
 }
-
 .box{
 background:#0b1328;
 padding:18px;
 border-radius:18px;
 text-align:center;
 }
-
 .big{
 font-size:28px;
 font-weight:800;
 margin-bottom:8px;
 }
-
 .green{color:#18f58b}
 .gold{color:#ffd84d}
 .blue{color:#38b6ff}
-.red{color:#ff5f5f}
-
 table{
 width:100%;
 border-collapse:collapse;
 margin-top:18px;
 }
-
 th,td{
 padding:12px;
 text-align:left;
 border-bottom:1px solid rgba(255,255,255,.05);
-vertical-align:middle;
 }
-
 th{
 font-size:14px;
 color:#9ab1e7;
 }
-
 .smallInput{
-width:150px;
+width:160px;
 padding:10px;
 font-size:16px;
 margin:0;
 }
-
 .doneRow{
 background:rgba(24,245,139,.08);
 }
-
+.hidden{
+display:none;
+}
 .footer{
 text-align:center;
 color:#7d8cb8;
@@ -168,7 +135,7 @@ padding:12px;
 <div class="top">
 <div>
 <div class="logo">TRADE CUBERZ</div>
-<div class="sub">План калькулятор розрахунку</div>
+<div class="sub">Професійний торговий калькулятор</div>
 </div>
 
 <a class="tg" href="https://t.me/+JxZLoij59XBmNTBi" target="_blank">Telegram</a>
@@ -176,28 +143,6 @@ padding:12px;
 </div>
 
 <div class="card">
-
-<div class="grid2">
-
-<div>
-<label>Валюта</label>
-<select id="currency">
-<option value="₴">UAH</option>
-<option value="$">USD</option>
-<option value="€">EUR</option>
-<option value="zł">PLN</option>
-</select>
-</div>
-
-<div>
-<label>Брокер</label>
-<select>
-<option>Pocket Option</option>
-<option>Binarium</option>
-</select>
-</div>
-
-</div>
 
 <label>Початковий баланс</label>
 <input type="number" id="start" value="4000">
@@ -209,6 +154,7 @@ padding:12px;
 <input type="number" id="days" value="20">
 
 <button onclick="createPlan()">Створити план</button>
+<button onclick="toggleHistory()">Показати весь шлях</button>
 
 <div class="stats">
 
@@ -247,6 +193,24 @@ padding:12px;
 <tbody id="rows"></tbody>
 </table>
 
+<div id="historyBox" class="hidden">
+
+<h3 style="margin-top:25px;color:#18f58b;">Історія шляху</h3>
+
+<table>
+<thead>
+<tr>
+<th>День</th>
+<th>Було введено</th>
+<th>Новий баланс</th>
+</tr>
+</thead>
+
+<tbody id="historyRows"></tbody>
+</table>
+
+</div>
+
 </div>
 
 <div class="footer">
@@ -261,10 +225,7 @@ let target=0;
 let totalDays=0;
 let doneDays=0;
 let rate=0;
-
-function cur(){
-return document.getElementById("currency").value;
-}
+let history=[];
 
 function createPlan(){
 
@@ -272,6 +233,7 @@ current=parseFloat(document.getElementById("start").value)||0;
 target=parseFloat(document.getElementById("goal").value)||0;
 totalDays=parseInt(document.getElementById("days").value)||0;
 doneDays=0;
+history=[];
 
 renderPlan();
 }
@@ -285,7 +247,7 @@ rate=(Math.pow(target/current,1/left)-1)*100;
 document.getElementById("daily").innerText=rate.toFixed(2)+"%";
 document.getElementById("done").innerText=doneDays;
 document.getElementById("left").innerText=totalDays-doneDays;
-document.getElementById("nowbal").innerText=cur()+Math.round(current);
+document.getElementById("nowbal").innerText=Math.round(current);
 
 let html="";
 let bal=current;
@@ -297,18 +259,15 @@ bal=bal*(1+rate/100);
 html+=`
 <tr id="row${i}">
 <td>День ${i}</td>
-<td class="gold">${cur()}${Math.round(bal)}</td>
-<td>
-<input class="smallInput" type="text" id="real${i}" placeholder="4200 або -200">
-</td>
-<td>
-<input type="checkbox" onchange="finishDay(${i},this)">
-</td>
+<td class="gold">${Math.round(bal)}</td>
+<td><input class="smallInput" id="real${i}" placeholder="4200 або -200"></td>
+<td><input type="checkbox" onchange="finishDay(${i},this)"></td>
 </tr>
 `;
 }
 
 document.getElementById("rows").innerHTML=html;
+renderHistory();
 }
 
 function finishDay(day,box){
@@ -318,7 +277,7 @@ if(!box.checked)return;
 let val=document.getElementById("real"+day).value.trim();
 
 if(val==""){
-alert("Введи баланс або збиток");
+alert("Введи значення");
 box.checked=false;
 return;
 }
@@ -326,24 +285,57 @@ return;
 let num=parseFloat(val);
 
 if(isNaN(num)){
-alert("Невірне значення");
 box.checked=false;
 return;
 }
 
-/* якщо мінусове число = збиток */
 if(num<0){
 current=current+num;
-if(current<1) current=1;
 }else{
 current=num;
 }
 
+if(current<1) current=1;
+
+history.push({
+day:day,
+input:val,
+balance:Math.round(current)
+});
+
 doneDays++;
 
-document.getElementById("row"+day).classList.add("doneRow");
-
 renderPlan();
+}
+
+function renderHistory(){
+
+let html="";
+
+for(let i=0;i<history.length;i++){
+
+html+=`
+<tr>
+<td>День ${history[i].day}</td>
+<td>${history[i].input}</td>
+<td>${history[i].balance}</td>
+</tr>
+`;
+}
+
+document.getElementById("historyRows").innerHTML=html;
+}
+
+function toggleHistory(){
+
+let box=document.getElementById("historyBox");
+
+if(box.classList.contains("hidden")){
+box.classList.remove("hidden");
+}else{
+box.classList.add("hidden");
+}
+
 }
 
 createPlan();
