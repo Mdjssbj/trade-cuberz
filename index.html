@@ -2,150 +2,216 @@
 <html lang="uk">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Trade Cuberz v2</title>
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Trade Cuberz Ultra</title>
 
 <style>
 *{
 margin:0;
 padding:0;
 box-sizing:border-box;
-font-family:Inter,Arial,sans-serif;
+font-family:Arial,Helvetica,sans-serif;
 }
 
 body{
-background:linear-gradient(135deg,#050816,#0b1024,#111a38);
+background:linear-gradient(135deg,#050816,#0a1020,#111b35);
 color:#fff;
 padding:20px;
 }
 
 .container{
-max-width:900px;
+max-width:1100px;
 margin:auto;
 }
 
 .card{
-background:rgba(19,27,46,.95);
+background:#11192d;
 border:1px solid rgba(255,255,255,.04);
-padding:28px;
 border-radius:22px;
+padding:28px;
 margin-bottom:22px;
-box-shadow:0 0 35px rgba(0,0,0,.35);
+box-shadow:0 0 25px rgba(0,0,0,.35);
 }
 
-h1{
-font-size:46px;
+.topbar{
+display:flex;
+justify-content:space-between;
+align-items:center;
+gap:15px;
+flex-wrap:wrap;
+}
+
+.logo{
+font-size:42px;
+font-weight:800;
 color:#18f58b;
-margin-bottom:8px;
 }
 
 .sub{
-color:#8fa4d8;
-font-size:18px;
+color:#8ea2d8;
+margin-top:5px;
+font-size:16px;
+}
+
+.actions{
+display:flex;
+gap:12px;
+}
+
+.btnsm{
+padding:12px 18px;
+border:none;
+border-radius:12px;
+font-weight:700;
+cursor:pointer;
+color:#fff;
+}
+
+.tg{background:#2b7cff;}
+.yt{background:#ff2d2d;}
+
+.grid2{
+display:grid;
+grid-template-columns:2fr 1fr;
+gap:18px;
+margin-top:18px;
+}
+
+@media(max-width:850px){
+.grid2{
+grid-template-columns:1fr;
+}
 }
 
 h2{
-font-size:30px;
-color:#6c4cff;
+font-size:28px;
 margin-bottom:18px;
+color:#fff;
+}
+
+label{
+display:block;
+margin-bottom:8px;
+color:#9bb0e5;
+font-size:14px;
 }
 
 input{
 width:100%;
 padding:16px;
-font-size:22px;
 border:none;
 outline:none;
 border-radius:14px;
-background:#091122;
+background:#20283b;
 color:#fff;
+font-size:24px;
 margin-bottom:15px;
 }
 
-button{
-width:100%;
-padding:16px;
-font-size:20px;
-font-weight:700;
+.quick{
+display:flex;
+gap:12px;
+flex-wrap:wrap;
+}
+
+.quick button{
+flex:1;
+min-width:100px;
+padding:14px;
 border:none;
-border-radius:14px;
+border-radius:12px;
+font-size:18px;
+font-weight:700;
 cursor:pointer;
-background:linear-gradient(90deg,#18f58b,#38b6ff);
-color:#000;
-transition:.2s;
+color:#fff;
 }
 
-button:hover{
-transform:translateY(-2px);
+.q1{background:#2d6bff;}
+.q2{background:#1ea84f;}
+.q3{background:#842dff;}
+
+.scheme{
+background:#0f1528;
+padding:20px;
+border-radius:18px;
 }
 
-.grid{
+.scheme h3{
+margin-bottom:14px;
+}
+
+.scheme p{
+color:#9bb0e5;
+margin-bottom:14px;
+}
+
+.bar{
+height:10px;
+border-radius:50px;
+background:linear-gradient(90deg,#ff4747,#ff9a00,#ffd84d,#38b6ff);
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+margin-top:22px;
+}
+
+th,td{
+padding:16px;
+text-align:left;
+border-bottom:1px solid rgba(255,255,255,.05);
+}
+
+th{
+color:#9bb0e5;
+font-size:14px;
+}
+
+.green{color:#18f58b;}
+.gold{color:#ffd84d;}
+.blue{color:#38b6ff;}
+
+.stats{
 display:grid;
 grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
 gap:15px;
 margin-top:18px;
 }
 
-.box{
-background:#0c1428;
-padding:18px;
-border-radius:16px;
+.stat{
+background:#0f1528;
+padding:20px;
+border-radius:18px;
 text-align:center;
 }
 
-.label{
-font-size:14px;
-color:#8fa4d8;
-margin-bottom:8px;
+.big{
+font-size:38px;
+font-weight:800;
+margin-bottom:6px;
 }
 
-.value{
-font-size:28px;
+.center{
+text-align:center;
+}
+
+.mainbtn{
+padding:16px 26px;
+border:none;
+border-radius:14px;
+background:linear-gradient(90deg,#2d6bff,#8a2dff);
+color:#fff;
+font-size:18px;
 font-weight:700;
-}
-
-.green{color:#18f58b;}
-.red{color:#ff5b5b;}
-.blue{color:#38b6ff;}
-.gold{color:#ffd84d;}
-
-table{
-width:100%;
-border-collapse:collapse;
-margin-top:18px;
-overflow:hidden;
-}
-
-th,td{
-padding:14px;
-text-align:left;
-border-bottom:1px solid rgba(255,255,255,.06);
-}
-
-th{
-color:#8fa4d8;
-font-size:14px;
-}
-
-.progress{
-height:14px;
-background:#091122;
-border-radius:50px;
-overflow:hidden;
-margin-top:12px;
-}
-
-.bar{
-height:100%;
-width:0%;
-background:linear-gradient(90deg,#18f58b,#38b6ff);
-transition:.4s;
+cursor:pointer;
+margin-top:10px;
 }
 
 .footer{
 text-align:center;
-color:#7a89b5;
-padding:10px;
+color:#7d8cb8;
+padding:12px;
 }
 </style>
 </head>
@@ -155,117 +221,161 @@ padding:10px;
 <div class="container">
 
 <div class="card">
-<h1>Trade Cuberz</h1>
-<div class="sub">Professional Binary Trading Dashboard</div>
+<div class="topbar">
+<div>
+<div class="logo">TRADE CUBERZ</div>
+<div class="sub">Професійний торговий калькулятор</div>
+</div>
+
+<div class="actions">
+<button class="btnsm tg">Telegram</button>
+<button class="btnsm yt">YouTube</button>
+</div>
+</div>
 </div>
 
 <div class="card">
-<h2>Bankroll Calculator</h2>
 
-<input type="number" id="balance" placeholder="Введи баланс $">
+<div class="grid2">
 
-<button onclick="calc()">Calculate Plan</button>
+<div>
+<label>Загальна сума</label>
+<input type="number" id="sum" placeholder="Введіть суму $" value="2200">
 
-<div class="grid">
-<div class="box">
-<div class="label">Recommended Stake</div>
-<div class="value green" id="stake">$0</div>
+<div class="quick">
+<button class="q1" onclick="setVal(100)">$100</button>
+<button class="q2" onclick="setVal(500)">$500</button>
+<button class="q3" onclick="setVal(1000)">$1000</button>
+</div>
 </div>
 
-<div class="box">
-<div class="label">Max Daily Risk</div>
-<div class="value red" id="risk">$0</div>
+<div class="scheme">
+<h3>Схема розподілу</h3>
+<p>1% → 1.5% → 3.5% → 8% → 20% → 60%</p>
+<div class="bar"></div>
 </div>
 
-<div class="box">
-<div class="label">Daily Goal</div>
-<div class="value blue" id="goal">$0</div>
-</div>
-
-<div class="box">
-<div class="label">Risk Level</div>
-<div class="value gold" id="level">-</div>
-</div>
 </div>
 
 <table>
 <thead>
 <tr>
-<th>Mode</th>
-<th>%</th>
-<th>Amount</th>
+<th>СТУПІНЬ</th>
+<th>ПРОЦЕНТ</th>
+<th>СУМА</th>
 </tr>
 </thead>
 
-<tbody id="table"></tbody>
+<tbody id="rows"></tbody>
 </table>
+
 </div>
 
 <div class="card">
-<h2>Today Session Plan</h2>
 
-<div class="grid">
-<div class="box">
-<div class="label">Trades Limit</div>
-<div class="value">5</div>
-</div>
+<h2>Планувальник цілей</h2>
 
-<div class="box">
-<div class="label">Stop Rule</div>
-<div class="value red">3 LOSSES</div>
+<div class="grid2">
+
+<div>
+<label>Початкова сума ($)</label>
+<input type="number" id="start" value="2200">
 </div>
 
-<div class="box">
-<div class="label">Focus</div>
-<div class="value green">DISCIPLINE</div>
-</div>
+<div>
+<label>Цільова сума ($)</label>
+<input type="number" id="goal" value="50000">
 </div>
 
-<div class="progress">
-<div class="bar" id="bar"></div>
 </div>
+
+<div style="margin-top:15px;">
+<label>Кількість днів</label>
+<input type="number" id="days" value="90">
+</div>
+
+<div class="center">
+<button class="mainbtn" onclick="plan()">Розрахувати план</button>
+</div>
+
+<div class="stats">
+
+<div class="stat">
+<div class="big green" id="daily">0%</div>
+<div>Щоденний % росту</div>
+</div>
+
+<div class="stat">
+<div class="big blue" id="done">4</div>
+<div>Виконано днів</div>
+</div>
+
+<div class="stat">
+<div class="big gold" id="left">86</div>
+<div>Залишилось днів</div>
+</div>
+
+<div class="stat">
+<div class="big gold" id="prog">4.4%</div>
+<div>Прогрес</div>
+</div>
+
+</div>
+
 </div>
 
 <div class="footer">
-Trade Cuberz v2 © 2026
+Trade Cuberz Ultra © 2026
 </div>
 
 </div>
 
 <script>
-function calc(){
+const perc=[1,1.5,3.5,8,20,60];
 
-let b = parseFloat(document.getElementById("balance").value);
+function render(){
+let s=parseFloat(document.getElementById("sum").value)||0;
+let html="";
 
-if(!b || b<=0){
-alert("Введи баланс");
-return;
-}
-
-let p1=(b*0.01).toFixed(2);
-let p2=(b*0.02).toFixed(2);
-let p5=(b*0.05).toFixed(2);
-let p10=(b*0.10).toFixed(2);
-
-document.getElementById("stake").innerText="$"+p1;
-document.getElementById("risk").innerText="$"+p5;
-document.getElementById("goal").innerText="$"+(b*0.07).toFixed(2);
-
-let level="LOW";
-if(b>300) level="MEDIUM";
-if(b>1000) level="HIGH";
-
-document.getElementById("level").innerText=level;
-
-document.getElementById("table").innerHTML=`
-<tr><td>Safe</td><td>1%</td><td class="green">$${p1}</td></tr>
-<tr><td>Normal</td><td>2%</td><td class="green">$${p2}</td></tr>
-<tr><td>Push</td><td>5%</td><td class="gold">$${p5}</td></tr>
-<tr><td>Aggressive</td><td>10%</td><td class="red">$${p10}</td></tr>
+for(let i=0;i<perc.length;i++){
+let val=(s*perc[i]/100).toFixed(2);
+html+=`
+<tr>
+<td class="green">${i+1} ступінь</td>
+<td>${perc[i]}%</td>
+<td class="gold">$${val}</td>
+</tr>
 `;
-
-document.getElementById("bar").style.width="35%";
 }
+
+document.getElementById("rows").innerHTML=html;
+}
+
+function setVal(v){
+document.getElementById("sum").value=v;
+render();
+}
+
+function plan(){
+
+let start=parseFloat(document.getElementById("start").value);
+let goal=parseFloat(document.getElementById("goal").value);
+let days=parseFloat(document.getElementById("days").value);
+
+if(start<=0||goal<=0||days<=0)return;
+
+let rate=(Math.pow(goal/start,1/days)-1)*100;
+
+document.getElementById("daily").innerText=rate.toFixed(3)+"%";
+
+let done=4;
+document.getElementById("done").innerText=done;
+document.getElementById("left").innerText=days-done;
+document.getElementById("prog").innerText=((done/days)*100).toFixed(1)+"%";
+}
+
+render();
+plan();
 </script>
 
 </body>
