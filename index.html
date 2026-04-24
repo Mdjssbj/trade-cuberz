@@ -1,100 +1,151 @@
 <!DOCTYPE html>
 <html lang="uk">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Trade Cuberz</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trade Cuberz v2</title>
 
 <style>
 *{
 margin:0;
 padding:0;
 box-sizing:border-box;
-font-family:Arial, Helvetica, sans-serif;
+font-family:Inter,Arial,sans-serif;
 }
 
 body{
-background:#0b0f1a;
-color:white;
-padding:30px;
+background:linear-gradient(135deg,#050816,#0b1024,#111a38);
+color:#fff;
+padding:20px;
 }
 
 .container{
-max-width:700px;
+max-width:900px;
 margin:auto;
 }
 
 .card{
-background:#131b2e;
-padding:25px;
-border-radius:20px;
-margin-bottom:20px;
-box-shadow:0 0 20px rgba(0,0,0,.35);
+background:rgba(19,27,46,.95);
+border:1px solid rgba(255,255,255,.04);
+padding:28px;
+border-radius:22px;
+margin-bottom:22px;
+box-shadow:0 0 35px rgba(0,0,0,.35);
 }
 
 h1{
-font-size:38px;
-margin-bottom:10px;
+font-size:46px;
 color:#18f58b;
+margin-bottom:8px;
+}
+
+.sub{
+color:#8fa4d8;
+font-size:18px;
 }
 
 h2{
-margin-bottom:15px;
+font-size:30px;
 color:#6c4cff;
-}
-
-p{
-margin-bottom:15px;
-color:#ccc;
+margin-bottom:18px;
 }
 
 input{
 width:100%;
-padding:14px;
+padding:16px;
+font-size:22px;
 border:none;
 outline:none;
-border-radius:12px;
+border-radius:14px;
+background:#091122;
+color:#fff;
 margin-bottom:15px;
-font-size:18px;
-background:#0b0f1a;
-color:white;
 }
 
 button{
 width:100%;
-padding:14px;
+padding:16px;
+font-size:20px;
+font-weight:700;
 border:none;
-border-radius:12px;
-background:#18f58b;
-color:#000;
-font-weight:bold;
-font-size:18px;
+border-radius:14px;
 cursor:pointer;
+background:linear-gradient(90deg,#18f58b,#38b6ff);
+color:#000;
+transition:.2s;
 }
 
 button:hover{
-opacity:.9;
+transform:translateY(-2px);
 }
 
-.result{
-margin-top:15px;
-line-height:1.8;
-color:#fff;
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+gap:15px;
+margin-top:18px;
 }
 
-.green{
-color:#18f58b;
+.box{
+background:#0c1428;
+padding:18px;
+border-radius:16px;
+text-align:center;
 }
 
-.red{
-color:#ff5757;
+.label{
+font-size:14px;
+color:#8fa4d8;
+margin-bottom:8px;
+}
+
+.value{
+font-size:28px;
+font-weight:700;
+}
+
+.green{color:#18f58b;}
+.red{color:#ff5b5b;}
+.blue{color:#38b6ff;}
+.gold{color:#ffd84d;}
+
+table{
+width:100%;
+border-collapse:collapse;
+margin-top:18px;
+overflow:hidden;
+}
+
+th,td{
+padding:14px;
+text-align:left;
+border-bottom:1px solid rgba(255,255,255,.06);
+}
+
+th{
+color:#8fa4d8;
+font-size:14px;
+}
+
+.progress{
+height:14px;
+background:#091122;
+border-radius:50px;
+overflow:hidden;
+margin-top:12px;
+}
+
+.bar{
+height:100%;
+width:0%;
+background:linear-gradient(90deg,#18f58b,#38b6ff);
+transition:.4s;
 }
 
 .footer{
 text-align:center;
-margin-top:20px;
-color:#777;
-font-size:14px;
+color:#7a89b5;
+padding:10px;
 }
 </style>
 </head>
@@ -105,62 +156,115 @@ font-size:14px;
 
 <div class="card">
 <h1>Trade Cuberz</h1>
-<p>Smart Binary Trading Calculator</p>
+<div class="sub">Professional Binary Trading Dashboard</div>
 </div>
 
 <div class="card">
-<h2>Bank Calculator</h2>
+<h2>Bankroll Calculator</h2>
 
 <input type="number" id="balance" placeholder="Введи баланс $">
 
-<button onclick="calculate()">Розрахувати</button>
+<button onclick="calc()">Calculate Plan</button>
 
-<div class="result" id="result"></div>
+<div class="grid">
+<div class="box">
+<div class="label">Recommended Stake</div>
+<div class="value green" id="stake">$0</div>
+</div>
+
+<div class="box">
+<div class="label">Max Daily Risk</div>
+<div class="value red" id="risk">$0</div>
+</div>
+
+<div class="box">
+<div class="label">Daily Goal</div>
+<div class="value blue" id="goal">$0</div>
+</div>
+
+<div class="box">
+<div class="label">Risk Level</div>
+<div class="value gold" id="level">-</div>
+</div>
+</div>
+
+<table>
+<thead>
+<tr>
+<th>Mode</th>
+<th>%</th>
+<th>Amount</th>
+</tr>
+</thead>
+
+<tbody id="table"></tbody>
+</table>
 </div>
 
 <div class="card">
 <h2>Today Session Plan</h2>
 
-<div class="result" id="plan">
-Goal: <span class="green">+$20</span><br>
-Max Loss: <span class="red">-$10</span><br>
-Trades Limit: 5<br>
-Rule: 3 losses = STOP
+<div class="grid">
+<div class="box">
+<div class="label">Trades Limit</div>
+<div class="value">5</div>
+</div>
+
+<div class="box">
+<div class="label">Stop Rule</div>
+<div class="value red">3 LOSSES</div>
+</div>
+
+<div class="box">
+<div class="label">Focus</div>
+<div class="value green">DISCIPLINE</div>
+</div>
+</div>
+
+<div class="progress">
+<div class="bar" id="bar"></div>
 </div>
 </div>
 
 <div class="footer">
-Trade Cuberz © 2026
+Trade Cuberz v2 © 2026
 </div>
 
 </div>
 
 <script>
-function calculate(){
+function calc(){
 
-let balance = document.getElementById("balance").value;
+let b = parseFloat(document.getElementById("balance").value);
 
-if(balance == "" || balance <= 0){
+if(!b || b<=0){
 alert("Введи баланс");
 return;
 }
 
-balance = parseFloat(balance);
+let p1=(b*0.01).toFixed(2);
+let p2=(b*0.02).toFixed(2);
+let p5=(b*0.05).toFixed(2);
+let p10=(b*0.10).toFixed(2);
 
-let one = (balance * 0.01).toFixed(2);
-let two = (balance * 0.02).toFixed(2);
-let five = (balance * 0.05).toFixed(2);
-let ten = (balance * 0.10).toFixed(2);
+document.getElementById("stake").innerText="$"+p1;
+document.getElementById("risk").innerText="$"+p5;
+document.getElementById("goal").innerText="$"+(b*0.07).toFixed(2);
 
-document.getElementById("result").innerHTML = `
-1% Stake = <span class="green">$${one}</span><br>
-2% Stake = <span class="green">$${two}</span><br>
-5% Stake = <span class="green">$${five}</span><br>
-10% Stake = <span class="green">$${ten}</span><br><br>
+let level="LOW";
+if(b>300) level="MEDIUM";
+if(b>1000) level="HIGH";
 
-Recommended First Trade: <span class="green">$${one}</span><br>
-Max Daily Risk: <span class="red">$${five}</span>
+document.getElementById("level").innerText=level;
+
+document.getElementById("table").innerHTML=`
+<tr><td>Safe</td><td>1%</td><td class="green">$${p1}</td></tr>
+<tr><td>Normal</td><td>2%</td><td class="green">$${p2}</td></tr>
+<tr><td>Push</td><td>5%</td><td class="gold">$${p5}</td></tr>
+<tr><td>Aggressive</td><td>10%</td><td class="red">$${p10}</td></tr>
 `;
+
+document.getElementById("bar").style.width="35%";
 }
 </script>
 
