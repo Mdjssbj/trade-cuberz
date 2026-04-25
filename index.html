@@ -31,6 +31,14 @@ border-radius:20px;
 margin-bottom:20px;
 }
 
+.top{
+display:flex;
+justify-content:space-between;
+align-items:center;
+gap:15px;
+flex-wrap:wrap;
+}
+
 .logo{
 font-size:42px;
 font-weight:900;
@@ -40,7 +48,15 @@ color:#18f58b;
 .sub{
 color:#8ea3d8;
 margin-top:8px;
-margin-bottom:20px;
+}
+
+.telegram{
+background:#2f78ff;
+padding:14px 24px;
+border-radius:14px;
+color:white;
+text-decoration:none;
+font-weight:700;
 }
 
 label{
@@ -58,6 +74,11 @@ border-radius:12px;
 background:#1f2b45;
 color:white;
 font-size:18px;
+}
+
+input::placeholder{
+color:#7c88a8;
+opacity:1;
 }
 
 button{
@@ -123,7 +144,7 @@ font-weight:700;
 }
 
 .smallInput{
-width:140px;
+width:160px;
 padding:10px;
 font-size:16px;
 }
@@ -139,27 +160,17 @@ display:none;
 
 <div class="card">
 
-<div style="display:flex;justify-content:space-between;align-items:center;gap:15px;flex-wrap:wrap;">
-
+<div class="top">
 <div>
 <div class="logo">TRADE CUBERZ</div>
 <div class="sub">Професійний торговий калькулятор</div>
 </div>
 
-<a href="https://t.me/+JxZLoij59XBmNTBi" target="_blank"
-style="
-background:#2f78ff;
-padding:14px 24px;
-border-radius:14px;
-color:white;
-text-decoration:none;
-font-weight:700;
-">
+<a class="telegram" href="https://t.me/+JxZLoij59XBmNTBi" target="_blank">
 Telegram
 </a>
-
 </div>
-  
+
 <label>Брокер</label>
 <select id="broker" onchange="renderAll()">
 <option value="pocket">Pocket Option</option>
@@ -175,16 +186,16 @@ Telegram
 </select>
 
 <label>Початковий баланс</label>
-<input type="number" id="start" value="730">
+<input type="number" id="start" placeholder="Наприклад: 4000">
 
 <label>Ціль</label>
-<input type="number" id="goal" value="2000">
+<input type="number" id="goal" placeholder="Наприклад: 10000">
 
 <label>Кількість днів</label>
-<input type="number" id="days" value="20">
+<input type="number" id="days" placeholder="Наприклад: 20">
 
 <label>Payout %</label>
-<input type="number" id="payout" value="80">
+<input type="number" id="payout" placeholder="Наприклад: 80">
 
 <button onclick="createPlan()">Створити план</button>
 
@@ -238,9 +249,9 @@ Telegram
 </div>
 
 <script>
-let current=730;
-let target=2000;
-let totalDays=20;
+let current=0;
+let target=0;
+let totalDays=0;
 let doneDays=0;
 let rate=0;
 
@@ -284,6 +295,8 @@ renderPlan();
 }
 
 function renderStats(){
+
+if(current<=0 || target<=0 || totalDays<=0)return;
 
 let left=Math.max(totalDays-doneDays,1);
 
@@ -348,8 +361,12 @@ html+=`
 <tr>
 <td>День ${i}</td>
 <td class="gold">${cur()}${Math.round(bal)}</td>
-<td><input class="smallInput" id="real${i}" placeholder="900 або -100"></td>
-<td><input type="checkbox" onchange="finishDay(${i},this)"></td>
+<td>
+<input class="smallInput" id="real${i}" placeholder="+4200 або -200">
+</td>
+<td>
+<input type="checkbox" onchange="finishDay(${i},this)">
+</td>
 </tr>
 `;
 }
@@ -387,8 +404,6 @@ doneDays++;
 
 renderAll();
 }
-
-createPlan();
 </script>
 
 </body>
