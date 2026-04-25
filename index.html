@@ -80,18 +80,14 @@ border-radius:14px;
 color:#fff;
 font-weight:700;
 cursor:pointer;
-text-decoration:none
+text-decoration:none;
+font-size:16px;
 }
 
 .telegram{background:#2f78ff}
 .themeBtn{background:#6b7fb3}
 .excelBtn{background:#16a34a}
-.pathBtn{
-background:#ff8a00;
-width:100%;
-margin-top:18px;
-font-size:18px;
-}
+.pathBtn{background:#ff8a00}
 
 .grid{
 display:grid;
@@ -226,6 +222,14 @@ padding:10px;
 font-size:16px
 }
 
+/* RESULT ZONE */
+.resultZone{
+display:none;
+grid-template-columns:1fr 1fr;
+gap:12px;
+margin-top:18px;
+}
+
 #historyBox{display:none}
 
 footer{
@@ -238,7 +242,7 @@ font-size:16px
 @media(max-width:700px){
 
 body{
-padding:12px 12px 90px 12px;
+padding:12px;
 }
 
 .card{
@@ -261,7 +265,7 @@ margin-top:6px;
 
 .topBtns{
 display:grid;
-grid-template-columns:1fr 1fr 1fr;
+grid-template-columns:1fr 1fr;
 gap:8px;
 margin-top:12px;
 }
@@ -269,7 +273,7 @@ margin-top:12px;
 .topBtns button,
 .topBtns a{
 padding:10px;
-font-size:13px;
+font-size:14px;
 text-align:center;
 }
 
@@ -307,9 +311,8 @@ font-size:14px;
 width:140px;
 }
 
-.pathBtn{
-font-size:16px;
-padding:12px;
+.resultZone{
+grid-template-columns:1fr;
 }
 }
 </style>
@@ -327,7 +330,6 @@ padding:12px;
 
 <div class="topBtns">
 <button class="themeBtn" onclick="toggleTheme()">🌙 / ☀️</button>
-<button class="excelBtn" onclick="exportCSV()">Excel</button>
 <a class="telegram" href="https://t.me/+JxZLoij59XBmNTBi" target="_blank">Telegram</a>
 </div>
 </div>
@@ -389,7 +391,6 @@ padding:12px;
 <div class="progressWrap">
 <div class="progress" id="bar"></div>
 </div>
-
 <div class="progressText" id="progText">0% до цілі</div>
 
 <div id="warnBox"></div>
@@ -418,9 +419,11 @@ padding:12px;
 <tbody id="planRows"></tbody>
 </table>
 
-<button class="pathBtn" id="pathButton" onclick="toggleHistory()" style="display:none;">
-📈 Мій шлях
-</button>
+<!-- RESULT ZONE -->
+<div class="resultZone" id="resultZone">
+<button class="pathBtn" onclick="toggleHistory()">📈 Мій шлях</button>
+<button class="excelBtn" onclick="exportCSV()">📄 Excel</button>
+</div>
 
 <div id="historyBox">
 <table>
@@ -612,8 +615,7 @@ html+=`
 
 historyRows.innerHTML=html;
 
-/* кнопка з'являється тільки якщо є історія */
-pathButton.style.display = history.length>0 ? "block" : "none";
+resultZone.style.display = history.length>0 ? "grid" : "none";
 }
 
 function saveAll(){
