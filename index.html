@@ -2,8 +2,8 @@
 <html lang="uk">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Trade Cuberz v8</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trade Cuberz</title>
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
@@ -11,25 +11,27 @@ body{background:#081225;color:#fff;padding:20px}
 .container{max-width:1200px;margin:auto}
 .card{background:#11192d;padding:25px;border-radius:20px;margin-bottom:20px}
 .top{display:flex;justify-content:space-between;align-items:center;gap:15px;flex-wrap:wrap}
-.logo{font-size:40px;font-weight:900;color:#18f58b}
+.logo{font-size:42px;font-weight:900;color:#18f58b}
 .sub{color:#8ea3d8;margin-top:8px}
 .telegram{background:#2f78ff;padding:14px 24px;border-radius:14px;color:#fff;text-decoration:none;font-weight:700}
-label{display:block;margin:14px 0 6px;color:#8ea3d8}
+label{display:block;margin-top:14px;margin-bottom:6px;color:#8ea3d8}
 input,select{width:100%;padding:14px;border:none;border-radius:12px;background:#1f2b45;color:#fff;font-size:18px}
-input::placeholder{color:#7c88a8}
+input::placeholder{color:#7c88a8;opacity:1}
 button{margin-top:15px;padding:14px;width:100%;border:none;border-radius:12px;font-size:18px;font-weight:700;color:#fff;background:linear-gradient(90deg,#2f78ff,#8a2dff);cursor:pointer}
 table{width:100%;margin-top:20px;border-collapse:collapse}
 th,td{padding:14px;border-bottom:1px solid rgba(255,255,255,.05);text-align:left}
 th{color:#8ea3d8}
+.green{color:#18f58b}.gold{color:#ffd84d}.blue{color:#38b6ff}
 .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-top:20px}
 .box{background:#081225;padding:18px;border-radius:16px;text-align:center}
 .big{font-size:30px;font-weight:800;margin-bottom:8px}
-.green{color:#18f58b}.gold{color:#ffd84d}.blue{color:#38b6ff}.red{color:#ff6464}
-.smallInput{width:170px;padding:10px;font-size:16px}
 .warn{margin-top:14px;padding:14px;border-radius:14px;background:#2b1720;color:#ff6a6a;font-weight:700}
+.smallInput{width:180px;padding:10px;font-size:16px}
+#historyBox{display:none}
 </style>
 </head>
 <body>
+
 <div class="container">
 <div class="card">
 
@@ -38,6 +40,7 @@ th{color:#8ea3d8}
 <div class="logo">TRADE CUBERZ</div>
 <div class="sub">Професійний торговий калькулятор</div>
 </div>
+
 <a class="telegram" href="https://t.me/+JxZLoij59XBmNTBi" target="_blank">Telegram</a>
 </div>
 
@@ -68,15 +71,16 @@ th{color:#8ea3d8}
 <input type="number" id="payout" placeholder="Наприклад: 80">
 
 <button onclick="createPlan()">Створити план</button>
+<button onclick="toggleHistory()">Показати мій шлях</button>
 
 <div class="stats">
 <div class="box"><div class="big green" id="daily">0%</div><div>Денний %</div></div>
 <div class="box"><div class="big blue" id="profitDay">0</div><div>Прибуток / день</div></div>
-<div class="box"><div class="big gold" id="bal">0</div><div>Баланс</div></div>
+<div class="box"><div class="big gold" id="nowbal">0</div><div>Баланс</div></div>
 <div class="box"><div class="big gold" id="left">0</div><div>Лишилось днів</div></div>
 </div>
 
-<div id="warn"></div>
+<div id="warnBox"></div>
 
 <table>
 <thead>
@@ -87,35 +91,54 @@ th{color:#8ea3d8}
 <th>Угод до цілі</th>
 </tr>
 </thead>
-<tbody id="steps"></tbody>
+<tbody id="stepsRows"></tbody>
 </table>
 
 <table>
 <thead>
 <tr>
 <th>День</th>
-<th>Очікуваний баланс</th>
+<th>Очікувано</th>
 <th>Поточний баланс / збиток</th>
 <th>✔</th>
 </tr>
 </thead>
-<tbody id="plan"></tbody>
+<tbody id="planRows"></tbody>
 </table>
+
+<div id="historyBox">
+
+<table>
+<thead>
+<tr>
+<th>День</th>
+<th>Що ввів</th>
+<th>Баланс після дня</th>
+</tr>
+</thead>
+<tbody id="historyRows"></tbody>
+</table>
+
+</div>
 
 </div>
 </div>
 
 <script>
 let current=0,target=0,totalDays=0,doneDays=0,rate=0;
+let history=[];
 const levels=[1,2,5,10];
 
-function c(){return document.getElementById("currency").value;}
+function c(){
+return document.getElementById("currency").value;
+}
 
 function roundInt(n){
 return Number((n+1e-9).toFixed(0));
 }
 
 function minTrade(){
+
 let broker=document.getElementById("broker").value;
 let cur=c();
 
@@ -123,6 +146,7 @@ if(cur==="₴"){
 if(broker==="pocket") return 50;
 if(broker==="binarium") return 25;
 }
+
 if(cur==="$") return 1;
 if(cur==="€") return 1;
 if(cur==="zł") return 5;
@@ -131,14 +155,19 @@ return 1;
 }
 
 function createPlan(){
+
 current=Number(document.getElementById("start").value)||0;
 target=Number(document.getElementById("goal").value)||0;
 totalDays=parseInt(document.getElementById("days").value)||0;
+
 doneDays=0;
+history=[];
+
 renderAll();
 }
 
 function renderAll(){
+
 if(current<=0||target<=0||totalDays<=0)return;
 
 let left=Math.max(totalDays-doneDays,1);
@@ -149,28 +178,29 @@ let profit=current*(rate/100);
 
 document.getElementById("daily").innerText=rate.toFixed(2)+"%";
 document.getElementById("profitDay").innerText=c()+roundInt(profit);
-document.getElementById("bal").innerText=c()+roundInt(current);
+document.getElementById("nowbal").innerText=c()+roundInt(current);
 document.getElementById("left").innerText=totalDays-doneDays;
 
 renderSteps();
 renderPlan();
+renderHistory();
 }
 
 function renderSteps(){
 
 let payout=(Number(document.getElementById("payout").value)||80)/100;
-let dayGoal=current*(rate/100);
 let min=minTrade();
+let dayGoal=current*(rate/100);
 
 let html="";
-let warn=false;
+let warning=false;
 
 for(let i=0;i<levels.length;i++){
 
 let raw=current*(levels[i]/100);
 let stake=Math.max(raw,min);
 
-if(raw<min) warn=true;
+if(raw<min) warning=true;
 
 let profit=stake*payout;
 let trades=Math.ceil((dayGoal+1e-9)/profit);
@@ -185,10 +215,10 @@ html+=`
 `;
 }
 
-document.getElementById("steps").innerHTML=html;
+document.getElementById("stepsRows").innerHTML=html;
 
-document.getElementById("warn").innerHTML=
-warn?`<div class="warn">Баланс малий для точних % ставок. Використано мінімальну угоду брокера.</div>`:"";
+document.getElementById("warnBox").innerHTML=
+warning?`<div class="warn">Баланс малий для точних ставок %. Використано мінімальні угоди брокера.</div>`:"";
 }
 
 function renderPlan(){
@@ -204,13 +234,17 @@ html+=`
 <tr>
 <td>День ${i}</td>
 <td class="gold">${c()}${roundInt(bal)}</td>
-<td><input class="smallInput" id="real${i}" placeholder="4200 або -200"></td>
-<td><input type="checkbox" onchange="finishDay(${i},this)"></td>
+<td>
+<input class="smallInput" id="real${i}" placeholder="4200 або -200">
+</td>
+<td>
+<input type="checkbox" onchange="finishDay(${i},this)">
+</td>
 </tr>
 `;
 }
 
-document.getElementById("plan").innerHTML=html;
+document.getElementById("planRows").innerHTML=html;
 }
 
 function finishDay(day,box){
@@ -231,11 +265,6 @@ box.checked=false;
 return;
 }
 
-/*
-Якщо число від'ємне = збиток
-Якщо число додатне = поточний баланс (факт)
-*/
-
 if(num<0){
 current=current+num;
 }else{
@@ -245,8 +274,45 @@ current=num;
 if(current<1) current=1;
 
 doneDays++;
+
+history.push({
+day:day,
+input:val,
+balance:roundInt(current)
+});
+
 renderAll();
 }
+
+function toggleHistory(){
+
+let box=document.getElementById("historyBox");
+
+if(box.style.display==="none" || box.style.display===""){
+box.style.display="block";
+}else{
+box.style.display="none";
+}
+}
+
+function renderHistory(){
+
+let html="";
+
+for(let i=0;i<history.length;i++){
+
+html+=`
+<tr>
+<td>День ${history[i].day}</td>
+<td>${history[i].input}</td>
+<td>${c()}${history[i].balance}</td>
+</tr>
+`;
+}
+
+document.getElementById("historyRows").innerHTML=html;
+}
 </script>
+
 </body>
 </html>
