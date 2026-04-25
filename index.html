@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Trade Cuberz 2.0</title>
+<title>TRADE CUBERZ</title>
 
 <style>
 *{
@@ -14,23 +14,23 @@ font-family:Arial,Helvetica,sans-serif;
 }
 
 body{
-background:linear-gradient(135deg,#07111f,#0e1b34,#11192d);
+background:linear-gradient(135deg,#07111f,#0d1730,#132247);
 min-height:100vh;
 padding:20px;
 color:#fff;
 }
 
 .container{
-max-width:1200px;
+max-width:1300px;
 margin:auto;
 }
 
 .card{
 background:rgba(255,255,255,.04);
 backdrop-filter:blur(12px);
-border:1px solid rgba(255,255,255,.08);
+border:1px solid rgba(255,255,255,.06);
+padding:28px;
 border-radius:24px;
-padding:25px;
 box-shadow:0 0 30px rgba(0,0,0,.35);
 }
 
@@ -40,13 +40,13 @@ justify-content:space-between;
 align-items:center;
 gap:15px;
 flex-wrap:wrap;
-margin-bottom:20px;
+margin-bottom:25px;
 }
 
 .logo{
-font-size:42px;
+font-size:48px;
 font-weight:900;
-background:linear-gradient(90deg,#18f58b,#2f78ff,#a52dff);
+background:linear-gradient(90deg,#18f58b,#2f78ff,#9d2dff);
 -webkit-background-clip:text;
 -webkit-text-fill-color:transparent;
 }
@@ -54,16 +54,17 @@ background:linear-gradient(90deg,#18f58b,#2f78ff,#a52dff);
 .sub{
 color:#90a4d4;
 margin-top:8px;
+font-size:22px;
 }
 
 .telegram{
 text-decoration:none;
 padding:14px 24px;
 border-radius:14px;
-font-weight:700;
-background:linear-gradient(90deg,#2f78ff,#6a4dff);
+font-weight:800;
+background:linear-gradient(90deg,#2f78ff,#6f4bff);
 color:#fff;
-transition:.3s;
+transition:.25s;
 }
 
 .telegram:hover{
@@ -72,15 +73,15 @@ transform:translateY(-2px);
 
 .grid{
 display:grid;
-grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-gap:15px;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:14px;
 }
 
 label{
 display:block;
 margin-bottom:7px;
-color:#9db0da;
 font-size:14px;
+color:#9db0da;
 }
 
 input,select{
@@ -89,15 +90,15 @@ padding:14px;
 border:none;
 outline:none;
 border-radius:14px;
-background:#182642;
+background:#192746;
 color:#fff;
 font-size:17px;
 }
 
 .actions{
 display:grid;
-grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
-gap:12px;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:14px;
 margin-top:18px;
 }
 
@@ -105,19 +106,19 @@ button{
 padding:15px;
 border:none;
 border-radius:14px;
-font-size:16px;
-font-weight:800;
+font-size:18px;
+font-weight:900;
 cursor:pointer;
 color:#fff;
-transition:.3s;
+transition:.25s;
 }
 
 .btn1{
-background:linear-gradient(90deg,#2f78ff,#8a2dff);
+background:linear-gradient(90deg,#2f78ff,#982cff);
 }
 
 .btn2{
-background:#1f2f52;
+background:#24345f;
 }
 
 button:hover{
@@ -127,63 +128,61 @@ transform:translateY(-2px);
 .stats{
 display:grid;
 grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
-gap:15px;
-margin-top:22px;
+gap:14px;
+margin-top:24px;
 }
 
 .box{
-background:#0e1830;
-padding:20px;
-border-radius:18px;
+background:#09173a;
+padding:22px;
+border-radius:20px;
 text-align:center;
-border:1px solid rgba(255,255,255,.05);
 }
 
 .big{
-font-size:30px;
+font-size:34px;
 font-weight:900;
 margin-bottom:8px;
 }
 
 .green{color:#18f58b;}
+.blue{color:#3ec3ff;}
 .gold{color:#ffd84d;}
-.blue{color:#46c2ff;}
 
 .progressWrap{
 margin-top:20px;
-background:#13203d;
 height:18px;
-border-radius:50px;
+border-radius:30px;
 overflow:hidden;
+background:#10204a;
 }
 
 .progress{
 height:100%;
 width:0%;
 background:linear-gradient(90deg,#18f58b,#2f78ff);
-transition:.7s;
+transition:.6s;
 }
 
 .progressText{
-margin-top:8px;
-color:#9cb0da;
+margin-top:10px;
 font-size:14px;
+color:#9db0da;
 }
 
 .table{
-margin-top:20px;
+margin-top:22px;
 display:grid;
 gap:12px;
 }
 
 .dayCard{
-background:#101a32;
+background:#0e1a39;
 padding:18px;
 border-radius:18px;
-border:1px solid rgba(255,255,255,.05);
 }
 
-.dayTop{
+.row{
 display:flex;
 justify-content:space-between;
 gap:10px;
@@ -193,18 +192,28 @@ margin-bottom:12px;
 
 .small{
 padding:12px;
-margin-top:10px;
+margin-top:8px;
+}
+
+.warn{
+margin-top:18px;
+padding:15px;
+border-radius:16px;
+background:#381a22;
+color:#ff7272;
+font-weight:800;
 }
 
 footer{
-margin-top:25px;
+margin-top:28px;
 text-align:center;
-color:#7f93be;
+color:#7d90b9;
 font-size:14px;
 }
 
 @media(max-width:600px){
-.logo{font-size:32px}
+.logo{font-size:34px}
+.sub{font-size:18px}
 }
 </style>
 </head>
@@ -216,7 +225,7 @@ font-size:14px;
 <div class="top">
 <div>
 <div class="logo">TRADE CUBERZ</div>
-<div class="sub">Premium Trading Calculator</div>
+<div class="sub">Професійний торговий калькулятор</div>
 </div>
 
 <a class="telegram" target="_blank"
@@ -224,6 +233,24 @@ href="https://t.me/+JxZLoij59XBmNTBi">Telegram</a>
 </div>
 
 <div class="grid">
+
+<div>
+<label>Брокер</label>
+<select id="broker">
+<option value="pocket">Pocket Option</option>
+<option value="binarium">Binarium</option>
+</select>
+</div>
+
+<div>
+<label>Валюта</label>
+<select id="currency">
+<option value="₴">UAH ₴</option>
+<option value="$">USD $</option>
+<option value="€">EUR €</option>
+<option value="zł">PLN zł</option>
+</select>
+</div>
 
 <div>
 <label>Початковий баланс</label>
@@ -236,7 +263,7 @@ href="https://t.me/+JxZLoij59XBmNTBi">Telegram</a>
 </div>
 
 <div>
-<label>Днів</label>
+<label>Кількість днів</label>
 <input type="number" id="days">
 </div>
 
@@ -248,7 +275,7 @@ href="https://t.me/+JxZLoij59XBmNTBi">Telegram</a>
 </div>
 
 <div class="actions">
-<button class="btn1" onclick="calc()">Створити план</button>
+<button class="btn1" onclick="createPlan()">Створити план</button>
 <button class="btn2" onclick="resetAll()">Очистити</button>
 </div>
 
@@ -256,22 +283,22 @@ href="https://t.me/+JxZLoij59XBmNTBi">Telegram</a>
 
 <div class="box">
 <div class="big green" id="daily">0%</div>
-<div>Денний ріст</div>
+<div>Денний %</div>
 </div>
 
 <div class="box">
-<div class="big blue" id="profit">0</div>
+<div class="big blue" id="profitDay">0</div>
 <div>Прибуток / день</div>
 </div>
 
 <div class="box">
-<div class="big gold" id="balance">0</div>
+<div class="big gold" id="nowbal">0</div>
 <div>Баланс</div>
 </div>
 
 <div class="box">
-<div class="big gold" id="goalLeft">0</div>
-<div>До цілі</div>
+<div class="big gold" id="left">0</div>
+<div>Лишилось днів</div>
 </div>
 
 </div>
@@ -282,18 +309,32 @@ href="https://t.me/+JxZLoij59XBmNTBi">Telegram</a>
 
 <div class="progressText" id="progText">0% до цілі</div>
 
-<div class="table" id="daysBox"></div>
+<div id="warnBox"></div>
+
+<div class="table" id="planRows"></div>
 
 <footer>
-Trade Cuberz 2.0
+TRADE CUBERZ
 </footer>
 
 </div>
 </div>
 
 <script>
+let current=0,target=0,totalDays=0,doneDays=0,rate=0;
+
+function c(){
+return document.getElementById("currency").value;
+}
+
+function round(n){
+return Math.round(n);
+}
+
 function save(){
-localStorage.setItem("tradeData",JSON.stringify({
+localStorage.setItem("tradepro",JSON.stringify({
+broker:broker.value,
+currency:currency.value,
 start:start.value,
 goal:goal.value,
 days:days.value,
@@ -302,7 +343,9 @@ payout:payout.value
 }
 
 function load(){
-let d=JSON.parse(localStorage.getItem("tradeData")||"{}");
+let d=JSON.parse(localStorage.getItem("tradepro")||"{}");
+broker.value=d.broker||"pocket";
+currency.value=d.currency||"₴";
 start.value=d.start||"";
 goal.value=d.goal||"";
 days.value=d.days||"";
@@ -314,51 +357,133 @@ localStorage.clear();
 location.reload();
 }
 
-function calc(){
+function minTrade(){
+
+let b=broker.value;
+let cur=currency.value;
+
+if(cur==="₴"){
+if(b==="pocket") return 50;
+if(b==="binarium") return 25;
+}
+
+if(cur==="$") return 1;
+if(cur==="€") return 1;
+if(cur==="zł") return 5;
+
+return 1;
+}
+
+function createPlan(){
 
 save();
 
-let s=Number(start.value);
-let g=Number(goal.value);
-let d=Number(days.value);
+current=Number(start.value)||0;
+target=Number(goal.value)||0;
+totalDays=Number(days.value)||0;
+doneDays=0;
 
-if(!s||!g||!d)return;
+renderAll();
+}
 
-let rate=(Math.pow(g/s,1/d)-1)*100;
-let dayProfit=s*(rate/100);
+function renderAll(){
+
+if(current<=0||target<=0||totalDays<=0)return;
+
+let leftDays=Math.max(totalDays-doneDays,1);
+
+rate=(Math.pow(target/current,1/leftDays)-1)*100;
+
+let dayProfit=current*(rate/100);
 
 daily.innerText=rate.toFixed(2)+"%";
-profit.innerText=Math.round(dayProfit);
-balance.innerText=Math.round(s);
-goalLeft.innerText=Math.round(g-s);
+profitDay.innerText=c()+round(dayProfit);
+nowbal.innerText=c()+round(current);
+left.innerText=totalDays-doneDays;
 
-let percent=((s/g)*100);
-if(percent>100)percent=100;
+let progress=(current/target)*100;
+if(progress>100)progress=100;
 
-bar.style.width=percent+"%";
-progText.innerText=percent.toFixed(1)+"% до цілі";
+bar.style.width=progress+"%";
+progText.innerText=progress.toFixed(1)+"% до цілі";
+
+renderPlan();
+}
+
+function renderPlan(){
 
 let html="";
-let bal=s;
+let bal=current;
+let min=minTrade();
+let payoutValue=(Number(payout.value)||80)/100;
+let warn=false;
 
-for(let i=1;i<=d;i++){
+for(let i=doneDays+1;i<=totalDays;i++){
 
 bal=bal*(1+rate/100);
 
+let raw=current*(0.02);
+let stake=Math.max(raw,min);
+if(raw<min)warn=true;
+
+let profit=stake*payoutValue;
+let trades=Math.ceil((current*(rate/100))/profit);
+
 html+=`
 <div class="dayCard">
-<div class="dayTop">
+
+<div class="row">
 <div><b>День ${i}</b></div>
-<div class="gold">${Math.round(bal)}</div>
+<div class="gold">${c()}${round(bal)}</div>
 </div>
 
-<input class="small" placeholder="Введи реальний баланс">
+<div class="row">
+<div>Ставка:</div>
+<div>${c()}${round(stake)}</div>
+</div>
+
+<div class="row">
+<div>Угод до цілі:</div>
+<div class="green">${trades}</div>
+</div>
+
+<input class="small" id="real${i}" placeholder="Введи баланс або -збиток">
+
+<button class="btn1 small" onclick="finishDay(${i})">
+Закрити день
+</button>
 
 </div>
 `;
 }
 
-daysBox.innerHTML=html;
+planRows.innerHTML=html;
+
+warnBox.innerHTML=
+warn?'<div class="warn">Баланс малий для точних ставок %. Використано мінімальну ставку брокера.</div>':'';
+}
+
+function finishDay(day){
+
+let val=document.getElementById("real"+day).value.trim();
+
+if(val==="")return;
+
+let num=Number(val);
+
+if(isNaN(num))return;
+
+if(num<0){
+current=current+num;
+}else{
+current=num;
+}
+
+if(current<1) current=1;
+
+doneDays++;
+
+renderAll();
 }
 
 load();
