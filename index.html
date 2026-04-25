@@ -13,11 +13,30 @@ box-sizing:border-box;
 font-family:Arial,Helvetica,sans-serif;
 }
 
+:root{
+--bg1:#07111f;
+--bg2:#0e1b34;
+--card:#0e1a39;
+--card2:#142448;
+--text:#ffffff;
+--muted:#95a7d3;
+}
+
+body.light{
+--bg1:#edf3ff;
+--bg2:#dfe8ff;
+--card:#ffffff;
+--card2:#f5f8ff;
+--text:#111;
+--muted:#52617e;
+}
+
 body{
-background:linear-gradient(135deg,#07111f,#0d1730,#132247);
+background:linear-gradient(135deg,var(--bg1),var(--bg2));
 min-height:100vh;
 padding:20px;
-color:#fff;
+color:var(--text);
+transition:.3s;
 }
 
 .container{
@@ -26,12 +45,11 @@ margin:auto;
 }
 
 .card{
-background:rgba(255,255,255,.04);
-backdrop-filter:blur(12px);
-border:1px solid rgba(255,255,255,.06);
+background:rgba(255,255,255,.03);
 padding:28px;
 border-radius:24px;
-box-shadow:0 0 30px rgba(0,0,0,.35);
+border:1px solid rgba(255,255,255,.06);
+backdrop-filter:blur(12px);
 }
 
 .top{
@@ -46,29 +64,36 @@ margin-bottom:25px;
 .logo{
 font-size:48px;
 font-weight:900;
-background:linear-gradient(90deg,#18f58b,#2f78ff,#9d2dff);
+background:linear-gradient(90deg,#18f58b,#2f78ff,#9f2dff);
 -webkit-background-clip:text;
 -webkit-text-fill-color:transparent;
 }
 
 .sub{
-color:#90a4d4;
 margin-top:8px;
+color:var(--muted);
 font-size:22px;
 }
 
-.telegram{
-text-decoration:none;
-padding:14px 24px;
-border-radius:14px;
-font-weight:800;
-background:linear-gradient(90deg,#2f78ff,#6f4bff);
-color:#fff;
-transition:.25s;
+.rightTop{
+display:flex;
+gap:10px;
+flex-wrap:wrap;
 }
 
-.telegram:hover{
-transform:translateY(-2px);
+.telegram,.themeBtn{
+text-decoration:none;
+padding:14px 22px;
+border-radius:14px;
+font-weight:800;
+border:none;
+cursor:pointer;
+color:#fff;
+background:linear-gradient(90deg,#2f78ff,#6a4dff);
+}
+
+.themeBtn{
+background:#253762;
 }
 
 .grid{
@@ -81,7 +106,7 @@ label{
 display:block;
 margin-bottom:7px;
 font-size:14px;
-color:#9db0da;
+color:var(--muted);
 }
 
 input,select{
@@ -90,8 +115,8 @@ padding:14px;
 border:none;
 outline:none;
 border-radius:14px;
-background:#192746;
-color:#fff;
+background:var(--card2);
+color:var(--text);
 font-size:17px;
 }
 
@@ -102,7 +127,7 @@ gap:14px;
 margin-top:18px;
 }
 
-button{
+button.mainBtn{
 padding:15px;
 border:none;
 border-radius:14px;
@@ -110,19 +135,18 @@ font-size:18px;
 font-weight:900;
 cursor:pointer;
 color:#fff;
-transition:.25s;
-}
-
-.btn1{
 background:linear-gradient(90deg,#2f78ff,#982cff);
 }
 
-.btn2{
+button.grayBtn{
+padding:15px;
+border:none;
+border-radius:14px;
+font-size:18px;
+font-weight:900;
+cursor:pointer;
+color:#fff;
 background:#24345f;
-}
-
-button:hover{
-transform:translateY(-2px);
 }
 
 .stats{
@@ -133,7 +157,7 @@ margin-top:24px;
 }
 
 .box{
-background:#09173a;
+background:var(--card);
 padding:22px;
 border-radius:20px;
 text-align:center;
@@ -146,38 +170,47 @@ margin-bottom:8px;
 }
 
 .green{color:#18f58b;}
-.blue{color:#3ec3ff;}
+.blue{color:#39c3ff;}
 .gold{color:#ffd84d;}
 
 .progressWrap{
 margin-top:20px;
 height:18px;
+background:#10204a;
 border-radius:30px;
 overflow:hidden;
-background:#10204a;
 }
 
 .progress{
 height:100%;
 width:0%;
 background:linear-gradient(90deg,#18f58b,#2f78ff);
-transition:.6s;
+transition:.5s;
 }
 
 .progressText{
 margin-top:10px;
+color:var(--muted);
 font-size:14px;
-color:#9db0da;
 }
 
-.table{
-margin-top:22px;
+.warn{
+margin-top:18px;
+padding:16px;
+border-radius:16px;
+background:#451d25;
+color:#ff7a7a;
+font-weight:800;
+}
+
+.dayList,.historyList{
 display:grid;
 gap:12px;
+margin-top:22px;
 }
 
-.dayCard{
-background:#0e1a39;
+.dayCard,.historyCard{
+background:var(--card);
 padding:18px;
 border-radius:18px;
 }
@@ -187,33 +220,45 @@ display:flex;
 justify-content:space-between;
 gap:10px;
 flex-wrap:wrap;
-margin-bottom:12px;
+margin-bottom:10px;
 }
 
-.small{
+.smallInput{
 padding:12px;
 margin-top:8px;
 }
 
-.warn{
-margin-top:18px;
-padding:15px;
-border-radius:16px;
-background:#381a22;
-color:#ff7272;
+.dayBtn{
+margin-top:10px;
+width:100%;
+padding:12px;
+border:none;
+border-radius:12px;
 font-weight:800;
+color:#fff;
+background:linear-gradient(90deg,#2f78ff,#982cff);
+cursor:pointer;
+}
+
+.sectionTitle{
+margin-top:26px;
+margin-bottom:10px;
+font-size:20px;
+font-weight:900;
 }
 
 footer{
-margin-top:28px;
+margin-top:35px;
 text-align:center;
-color:#7d90b9;
-font-size:14px;
+color:var(--muted);
+font-size:26px;
+padding:20px;
 }
 
 @media(max-width:600px){
 .logo{font-size:34px}
 .sub{font-size:18px}
+footer{font-size:18px}
 }
 </style>
 </head>
@@ -228,8 +273,10 @@ font-size:14px;
 <div class="sub">Професійний торговий калькулятор</div>
 </div>
 
-<a class="telegram" target="_blank"
-href="https://t.me/+JxZLoij59XBmNTBi">Telegram</a>
+<div class="rightTop">
+<button class="themeBtn" onclick="toggleTheme()">🌙 / ☀️</button>
+<a class="telegram" href="https://t.me/+JxZLoij59XBmNTBi" target="_blank">Telegram</a>
+</div>
 </div>
 
 <div class="grid">
@@ -275,8 +322,8 @@ href="https://t.me/+JxZLoij59XBmNTBi">Telegram</a>
 </div>
 
 <div class="actions">
-<button class="btn1" onclick="createPlan()">Створити план</button>
-<button class="btn2" onclick="resetAll()">Очистити</button>
+<button class="mainBtn" onclick="createPlan()">Створити план</button>
+<button class="grayBtn" onclick="resetAll()">Очистити</button>
 </div>
 
 <div class="stats">
@@ -311,10 +358,14 @@ href="https://t.me/+JxZLoij59XBmNTBi">Telegram</a>
 
 <div id="warnBox"></div>
 
-<div class="table" id="planRows"></div>
+<div class="sectionTitle">План по днях</div>
+<div class="dayList" id="planRows"></div>
+
+<div class="sectionTitle">Мій шлях</div>
+<div class="historyList" id="historyRows"></div>
 
 <footer>
-TRADE CUBERZ
+Trade Cuberz © 2026
 </footer>
 
 </div>
@@ -322,43 +373,29 @@ TRADE CUBERZ
 
 <script>
 let current=0,target=0,totalDays=0,doneDays=0,rate=0;
+let history=[];
 
 function c(){
-return document.getElementById("currency").value;
+return currency.value;
 }
 
 function round(n){
 return Math.round(n);
 }
 
-function save(){
-localStorage.setItem("tradepro",JSON.stringify({
-broker:broker.value,
-currency:currency.value,
-start:start.value,
-goal:goal.value,
-days:days.value,
-payout:payout.value
-}));
+function toggleTheme(){
+document.body.classList.toggle("light");
+localStorage.setItem("theme",
+document.body.classList.contains("light")?"light":"dark");
 }
 
-function load(){
-let d=JSON.parse(localStorage.getItem("tradepro")||"{}");
-broker.value=d.broker||"pocket";
-currency.value=d.currency||"₴";
-start.value=d.start||"";
-goal.value=d.goal||"";
-days.value=d.days||"";
-payout.value=d.payout||80;
+function loadTheme(){
+if(localStorage.getItem("theme")==="light"){
+document.body.classList.add("light");
 }
-
-function resetAll(){
-localStorage.clear();
-location.reload();
 }
 
 function minTrade(){
-
 let b=broker.value;
 let cur=currency.value;
 
@@ -366,7 +403,6 @@ if(cur==="₴"){
 if(b==="pocket") return 50;
 if(b==="binarium") return 25;
 }
-
 if(cur==="$") return 1;
 if(cur==="€") return 1;
 if(cur==="zł") return 5;
@@ -374,16 +410,57 @@ if(cur==="zł") return 5;
 return 1;
 }
 
-function createPlan(){
+function save(){
+localStorage.setItem("tradeFinal",JSON.stringify({
+broker:broker.value,
+currency:currency.value,
+start:start.value,
+goal:goal.value,
+days:days.value,
+payout:payout.value,
+history:history,
+current:current,
+doneDays:doneDays
+}));
+}
 
-save();
+function load(){
+let d=JSON.parse(localStorage.getItem("tradeFinal")||"{}");
+
+broker.value=d.broker||"pocket";
+currency.value=d.currency||"₴";
+start.value=d.start||"";
+goal.value=d.goal||"";
+days.value=d.days||"";
+payout.value=d.payout||80;
+
+history=d.history||[];
+current=d.current||0;
+doneDays=d.doneDays||0;
+
+if(current>0){
+target=Number(goal.value)||0;
+totalDays=Number(days.value)||0;
+renderAll();
+renderHistory();
+}
+}
+
+function resetAll(){
+localStorage.clear();
+location.reload();
+}
+
+function createPlan(){
 
 current=Number(start.value)||0;
 target=Number(goal.value)||0;
 totalDays=Number(days.value)||0;
 doneDays=0;
+history=[];
 
 renderAll();
+save();
 }
 
 function renderAll(){
@@ -408,25 +485,29 @@ bar.style.width=progress+"%";
 progText.innerText=progress.toFixed(1)+"% до цілі";
 
 renderPlan();
+renderHistory();
+save();
 }
 
 function renderPlan(){
 
 let html="";
 let bal=current;
+
+let payoutVal=(Number(payout.value)||80)/100;
 let min=minTrade();
-let payoutValue=(Number(payout.value)||80)/100;
-let warn=false;
+let warning=false;
 
 for(let i=doneDays+1;i<=totalDays;i++){
 
 bal=bal*(1+rate/100);
 
-let raw=current*(0.02);
+let raw=current*0.02;
 let stake=Math.max(raw,min);
-if(raw<min)warn=true;
 
-let profit=stake*payoutValue;
+if(raw<min)warning=true;
+
+let profit=stake*payoutVal;
 let trades=Math.ceil((current*(rate/100))/profit);
 
 html+=`
@@ -443,15 +524,13 @@ html+=`
 </div>
 
 <div class="row">
-<div>Угод до цілі:</div>
+<div>Угод сьогодні:</div>
 <div class="green">${trades}</div>
 </div>
 
-<input class="small" id="real${i}" placeholder="Введи баланс або -збиток">
+<input class="smallInput" id="real${i}" placeholder="Введи баланс або -збиток">
 
-<button class="btn1 small" onclick="finishDay(${i})">
-Закрити день
-</button>
+<button class="dayBtn" onclick="finishDay(${i})">Закрити день</button>
 
 </div>
 `;
@@ -460,18 +539,18 @@ html+=`
 planRows.innerHTML=html;
 
 warnBox.innerHTML=
-warn?'<div class="warn">Баланс малий для точних ставок %. Використано мінімальну ставку брокера.</div>':'';
+warning?'<div class="warn">Баланс малий для точних ставок %. Використано мінімальну ставку брокера.</div>':'';
 }
 
 function finishDay(day){
 
 let val=document.getElementById("real"+day).value.trim();
 
-if(val==="")return;
+if(val==="") return;
 
 let num=Number(val);
 
-if(isNaN(num))return;
+if(isNaN(num)) return;
 
 if(num<0){
 current=current+num;
@@ -481,11 +560,50 @@ current=num;
 
 if(current<1) current=1;
 
+history.push({
+day:day,
+input:val,
+balance:round(current)
+});
+
 doneDays++;
 
 renderAll();
 }
 
+function renderHistory(){
+
+let html="";
+
+if(history.length===0){
+html='<div class="historyCard">Історія поки порожня</div>';
+historyRows.innerHTML=html;
+return;
+}
+
+for(let i=0;i<history.length;i++){
+
+html+=`
+<div class="historyCard">
+
+<div class="row">
+<div><b>День ${history[i].day}</b></div>
+<div class="gold">${c()}${history[i].balance}</div>
+</div>
+
+<div class="row">
+<div>Що ввів:</div>
+<div>${history[i].input}</div>
+</div>
+
+</div>
+`;
+}
+
+historyRows.innerHTML=html;
+}
+
+loadTheme();
 load();
 </script>
 
