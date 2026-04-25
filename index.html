@@ -12,18 +12,22 @@
 --bg:#081225;
 --card:#11192d;
 --card2:#1f2b45;
---text:#fff;
+--text:#ffffff;
 --muted:#8ea3d8;
---line:rgba(255,255,255,.05);
+--line:rgba(255,255,255,.06);
+--warnBg:#2b1720;
+--warnText:#ff6a6a;
 }
 
 body.light{
 --bg:#eef4ff;
 --card:#ffffff;
 --card2:#dfe8ff;
---text:#111;
---muted:#52617e;
---line:rgba(0,0,0,.08);
+--text:#111111;
+--muted:#40557c;
+--line:rgba(0,0,0,.10);
+--warnBg:#ffe6e6;
+--warnText:#c62828;
 }
 
 body{
@@ -34,11 +38,11 @@ transition:.25s;
 }
 
 .container{max-width:1200px;margin:auto}
+
 .card{
 background:var(--card);
 padding:25px;
 border-radius:22px;
-margin-bottom:20px;
 box-shadow:0 10px 30px rgba(0,0,0,.25)
 }
 
@@ -67,19 +71,20 @@ gap:10px;
 flex-wrap:wrap
 }
 
-.telegram,.themeBtn,.excelBtn{
+.telegram,.themeBtn,.excelBtn,.pathBtn{
 padding:14px 22px;
+border:none;
 border-radius:14px;
 color:#fff;
-text-decoration:none;
 font-weight:700;
-border:none;
-cursor:pointer
+cursor:pointer;
+text-decoration:none
 }
 
 .telegram{background:#2f78ff}
-.themeBtn{background:#4c5f92}
-.excelBtn{background:#18a957}
+.themeBtn{background:#6b7fb3}
+.excelBtn{background:#16a34a}
+.pathBtn{background:#ff8a00}
 
 .grid{
 display:grid;
@@ -111,26 +116,22 @@ gap:14px;
 margin-top:18px
 }
 
-button.main{
+button.main,button.gray{
 padding:14px;
 border:none;
 border-radius:12px;
 font-size:18px;
 font-weight:700;
 color:#fff;
-background:linear-gradient(90deg,#2f78ff,#8a2dff);
 cursor:pointer
 }
 
+button.main{
+background:linear-gradient(90deg,#2f78ff,#8a2dff)
+}
+
 button.gray{
-padding:14px;
-border:none;
-border-radius:12px;
-font-size:18px;
-font-weight:700;
-color:#fff;
-background:#2b3a60;
-cursor:pointer
+background:#2b3a60
 }
 
 .stats{
@@ -157,6 +158,10 @@ margin-bottom:8px
 .gold{color:#ffd84d}
 .blue{color:#38b6ff}
 
+body.light .green{color:#0b8f47}
+body.light .gold{color:#c98a00}
+body.light .blue{color:#0066d6}
+
 .progressWrap{
 margin-top:18px;
 height:16px;
@@ -182,8 +187,8 @@ font-size:14px
 margin-top:14px;
 padding:14px;
 border-radius:14px;
-background:#2b1720;
-color:#ff6a6a;
+background:var(--warnBg);
+color:var(--warnText);
 font-weight:700
 }
 
@@ -237,6 +242,7 @@ table{font-size:14px}
 <div class="topBtns">
 <button class="themeBtn" onclick="toggleTheme()">🌙 / ☀️</button>
 <button class="excelBtn" onclick="exportCSV()">Excel</button>
+<button class="pathBtn" onclick="toggleHistory()">📈 Мій шлях</button>
 <a class="telegram" href="https://t.me/+JxZLoij59XBmNTBi" target="_blank">Telegram</a>
 </div>
 </div>
@@ -285,7 +291,6 @@ table{font-size:14px}
 
 <div class="actions">
 <button class="main" onclick="createPlan()">Створити план</button>
-<button class="gray" onclick="toggleHistory()">Мій шлях</button>
 <button class="gray" onclick="resetAll()">Очистити</button>
 </div>
 
@@ -328,7 +333,6 @@ table{font-size:14px}
 </table>
 
 <div id="historyBox">
-
 <table>
 <thead>
 <tr>
@@ -339,7 +343,6 @@ table{font-size:14px}
 </thead>
 <tbody id="historyRows"></tbody>
 </table>
-
 </div>
 
 <footer>
@@ -365,7 +368,6 @@ if(cur==="₴"){
 if(b==="pocket") return 50;
 if(b==="binarium") return 25;
 }
-
 if(cur==="$") return 1;
 if(cur==="€") return 1;
 if(cur==="zł") return 5;
@@ -388,7 +390,6 @@ function renderAll(){
 if(current<=0||target<=0||totalDays<=0)return;
 
 let leftDays=Math.max(totalDays-doneDays,1);
-
 rate=(Math.pow(target/current,1/leftDays)-1)*100;
 
 let profit=current*(rate/100);
@@ -515,10 +516,9 @@ function renderHistory(){
 let html="";
 
 for(let i=0;i<history.length;i++){
-
 html+=`
 <tr>
-<td>День ${history[i].day}</td>
+<td>${history[i].day}</td>
 <td>${history[i].input}</td>
 <td>${c()}${history[i].balance}</td>
 </tr>
@@ -529,7 +529,6 @@ historyRows.innerHTML=html;
 }
 
 function saveAll(){
-
 localStorage.setItem("tradeRealPro",JSON.stringify({
 broker:broker.value,
 currency:currency.value,
@@ -586,17 +585,24 @@ document.body.classList.add("light");
 
 function exportCSV(){
 
-let rows="День,Що ввів,Баланс\n";
+let rows="День,Що ввів,Баланс після дня\r\n";
 
 for(let i=0;i<history.length;i++){
-rows+=`${history[i].day},${history[i].input},${history[i].balance}\n`;
+rows+=`${history[i].day},${history[i].input},${history[i].balance}\r\n`;
 }
 
-let blob=new Blob([rows],{type:"text/csv"});
+let csv="\uFEFF"+rows;
+
+let blob=new Blob([csv],{
+type:"text/csv;charset=utf-8;"
+});
+
 let a=document.createElement("a");
 a.href=URL.createObjectURL(blob);
 a.download="trade-cuberz-history.csv";
+document.body.appendChild(a);
 a.click();
+document.body.removeChild(a);
 }
 
 loadTheme();
