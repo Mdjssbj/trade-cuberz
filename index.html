@@ -1,5 +1,279 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trade Cuberz</title>
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial, sans-serif;
+}
+
+body{
+background:#081225;
+color:white;
+padding:20px;
+}
+
+.container{
+max-width:1200px;
+margin:auto;
+}
+
+.card{
+background:#11192d;
+padding:25px;
+border-radius:20px;
+margin-bottom:20px;
+}
+
+.logo{
+font-size:42px;
+font-weight:900;
+color:#18f58b;
+}
+
+.sub{
+color:#8ea3d8;
+margin-top:8px;
+margin-bottom:20px;
+}
+
+label{
+display:block;
+margin-top:14px;
+margin-bottom:6px;
+color:#8ea3d8;
+}
+
+input,select{
+width:100%;
+padding:14px;
+border:none;
+border-radius:12px;
+background:#1f2b45;
+color:white;
+font-size:18px;
+}
+
+button{
+margin-top:15px;
+padding:14px;
+width:100%;
+border:none;
+border-radius:12px;
+font-size:18px;
+font-weight:700;
+color:white;
+background:linear-gradient(90deg,#2f78ff,#8a2dff);
+cursor:pointer;
+}
+
+table{
+width:100%;
+margin-top:20px;
+border-collapse:collapse;
+}
+
+th,td{
+padding:14px;
+border-bottom:1px solid rgba(255,255,255,.05);
+text-align:left;
+}
+
+th{
+color:#8ea3d8;
+}
+
+.green{color:#18f58b;}
+.gold{color:#ffd84d;}
+.red{color:#ff6464;}
+
+.stats{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+gap:12px;
+margin-top:20px;
+}
+
+.box{
+background:#081225;
+padding:18px;
+border-radius:16px;
+text-align:center;
+}
+
+.big{
+font-size:30px;
+font-weight:800;
+margin-bottom:8px;
+}
+
+.warn{
+margin-top:14px;
+padding:14px;
+border-radius:14px;
+background:#2b1720;
+color:#ff6a6a;
+font-weight:700;
+}
+
+.smallInput{
+width:140px;
+padding:10px;
+font-size:16px;
+}
+
+.hidden{
+display:none;
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+
+<div class="card">
+<div class="logo">TRADE CUBERZ</div>
+<div class="sub">Професійний торговий калькулятор</div>
+
+<label>Брокер</label>
+<select id="broker" onchange="renderAll()">
+<option value="pocket">Pocket Option</option>
+<option value="binarium">Binarium</option>
+</select>
+
+<label>Валюта</label>
+<select id="currency" onchange="renderAll()">
+<option value="₴">UAH ₴</option>
+<option value="$">USD $</option>
+<option value="€">EUR €</option>
+<option value="zł">PLN zł</option>
+</select>
+
+<label>Початковий баланс</label>
+<input type="number" id="start" value="730">
+
+<label>Ціль</label>
+<input type="number" id="goal" value="2000">
+
+<label>Кількість днів</label>
+<input type="number" id="days" value="20">
+
+<label>Payout %</label>
+<input type="number" id="payout" value="80">
+
+<button onclick="createPlan()">Створити план</button>
+
+<div class="stats">
+
+<div class="box">
+<div class="big green" id="daily">0%</div>
+<div>Денний %</div>
+</div>
+
+<div class="box">
+<div class="big gold" id="nowbal">0</div>
+<div>Баланс</div>
+</div>
+
+<div class="box">
+<div class="big gold" id="left">0</div>
+<div>Лишилось днів</div>
+</div>
+
+</div>
+
+<div id="warnBox"></div>
+
+<table>
+<thead>
+<tr>
+<th>Ступінь</th>
+<th>%</th>
+<th>Сума</th>
+<th>Угод до цілі</th>
+</tr>
+</thead>
+<tbody id="stepsRows"></tbody>
+</table>
+
+<table>
+<thead>
+<tr>
+<th>День</th>
+<th>Очікувано</th>
+<th>Факт / збиток</th>
+<th>✔</th>
+</tr>
+</thead>
+<tbody id="planRows"></tbody>
+</table>
+
+</div>
+
+</div>
+
 <script>
-/* ЗАМІНИ свою функцію renderSteps() на цю */
+let current=730;
+let target=2000;
+let totalDays=20;
+let doneDays=0;
+let rate=0;
+
+const levels=[1,2,5,10];
+
+function cur(){
+return document.getElementById("currency").value;
+}
+
+function minTrade(){
+
+let broker=document.getElementById("broker").value;
+let c=cur();
+
+if(c=="₴"){
+if(broker=="pocket") return 50;
+if(broker=="binarium") return 25;
+}
+
+if(c=="$") return 1;
+if(c=="€") return 1;
+if(c=="zł") return 5;
+
+return 1;
+}
+
+function createPlan(){
+
+current=parseFloat(document.getElementById("start").value)||0;
+target=parseFloat(document.getElementById("goal").value)||0;
+totalDays=parseInt(document.getElementById("days").value)||0;
+doneDays=0;
+
+renderAll();
+}
+
+function renderAll(){
+renderStats();
+renderSteps();
+renderPlan();
+}
+
+function renderStats(){
+
+let left=Math.max(totalDays-doneDays,1);
+
+rate=(Math.pow(target/current,1/left)-1)*100;
+
+document.getElementById("daily").innerText=rate.toFixed(2)+"%";
+document.getElementById("nowbal").innerText=cur()+Math.round(current);
+document.getElementById("left").innerText=totalDays-doneDays;
+}
 
 function renderSteps(){
 
@@ -8,56 +282,95 @@ let min=minTrade();
 let dayGoal=current*(rate/100);
 
 let html="";
+let warning=false;
 
 for(let i=0;i<levels.length;i++){
 
 let raw=current*(levels[i]/100);
 let stake=raw<min ? min : raw;
 
+if(raw<min) warning=true;
+
 let profit=stake*payout;
 let trades=Math.ceil(dayGoal/profit);
-
-let note="";
-let needBalance=Math.ceil(min/(levels[i]/100));
-
-if(raw<min){
-note=` (мін.)`;
-}
 
 html+=`
 <tr>
 <td>${i+1}</td>
 <td>${levels[i]}%</td>
-<td class="gold">${cur()}${Math.round(stake)}${note}</td>
+<td class="gold">${cur()}${Math.round(stake)} ${raw<min?'(мін.)':''}</td>
 <td class="green">${trades}</td>
 </tr>
 `;
-
-}
-
-/* Попередження зверху */
-
-let warn="";
-
-if(current < 5000 && cur()=="₴"){
-warn=`
-<div style="
-margin-top:15px;
-padding:14px;
-border-radius:14px;
-background:#2b1720;
-color:#ff6a6a;
-font-weight:700;
-">
-Баланс малий для точних 1% ставок. Брокер застосував мінімальні угоди.
-</div>
-`;
-}else{
-warn="";
 }
 
 document.getElementById("stepsRows").innerHTML=html;
-document.getElementById("stepsRows").insertAdjacentHTML("beforebegin",warn);
 
+if(warning){
+document.getElementById("warnBox").innerHTML=`
+<div class="warn">
+Баланс малий для точних ставок %. Брокер застосував мінімальну угоду.
+</div>`;
+}else{
+document.getElementById("warnBox").innerHTML="";
 }
+}
+
+function renderPlan(){
+
+let html="";
+let bal=current;
+
+for(let i=doneDays+1;i<=totalDays;i++){
+
+bal=bal*(1+rate/100);
+
+html+=`
+<tr>
+<td>День ${i}</td>
+<td class="gold">${cur()}${Math.round(bal)}</td>
+<td><input class="smallInput" id="real${i}" placeholder="900 або -100"></td>
+<td><input type="checkbox" onchange="finishDay(${i},this)"></td>
+</tr>
+`;
+}
+
+document.getElementById("planRows").innerHTML=html;
+}
+
+function finishDay(day,box){
+
+if(!box.checked)return;
+
+let val=document.getElementById("real"+day).value.trim();
+
+if(val==""){
+box.checked=false;
+return;
+}
+
+let num=parseFloat(val);
+
+if(isNaN(num)){
+box.checked=false;
+return;
+}
+
+if(num<0){
+current=current+num;
+}else{
+current=num;
+}
+
+if(current<1) current=1;
+
+doneDays++;
+
+renderAll();
+}
+
+createPlan();
 </script>
+
+</body>
+</html>
