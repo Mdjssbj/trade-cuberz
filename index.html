@@ -86,7 +86,12 @@ text-decoration:none
 .telegram{background:#2f78ff}
 .themeBtn{background:#6b7fb3}
 .excelBtn{background:#16a34a}
-.pathBtn{background:#ff8a00}
+.pathBtn{
+background:#ff8a00;
+width:100%;
+margin-top:18px;
+font-size:18px;
+}
 
 .grid{
 display:grid;
@@ -230,11 +235,6 @@ color:var(--muted);
 font-size:16px
 }
 
-/* MOBILE APP STYLE */
-.mobileNav{
-display:none;
-}
-
 @media(max-width:700px){
 
 body{
@@ -252,7 +252,6 @@ display:block;
 
 .logo{
 font-size:30px;
-line-height:1.05;
 }
 
 .sub{
@@ -261,13 +260,22 @@ margin-top:6px;
 }
 
 .topBtns{
-display:none;
+display:grid;
+grid-template-columns:1fr 1fr 1fr;
+gap:8px;
+margin-top:12px;
+}
+
+.topBtns button,
+.topBtns a{
+padding:10px;
+font-size:13px;
+text-align:center;
 }
 
 .grid{
 grid-template-columns:1fr;
 gap:10px;
-margin-top:14px;
 }
 
 .actions{
@@ -299,38 +307,10 @@ font-size:14px;
 width:140px;
 }
 
-.mobileNav{
-display:grid;
-grid-template-columns:repeat(4,1fr);
-gap:8px;
-position:fixed;
-left:10px;
-right:10px;
-bottom:10px;
-background:var(--card);
-padding:10px;
-border-radius:18px;
-box-shadow:0 10px 30px rgba(0,0,0,.35);
-z-index:999;
+.pathBtn{
+font-size:16px;
+padding:12px;
 }
-
-.mobileNav button,
-.mobileNav a{
-border:none;
-padding:10px 6px;
-border-radius:12px;
-font-size:12px;
-font-weight:700;
-text-align:center;
-text-decoration:none;
-color:#fff;
-cursor:pointer;
-}
-
-.mobileNav .n1{background:#6b7fb3}
-.mobileNav .n2{background:#16a34a}
-.mobileNav .n3{background:#ff8a00}
-.mobileNav .n4{background:#2f78ff}
 }
 </style>
 </head>
@@ -348,7 +328,6 @@ cursor:pointer;
 <div class="topBtns">
 <button class="themeBtn" onclick="toggleTheme()">🌙 / ☀️</button>
 <button class="excelBtn" onclick="exportCSV()">Excel</button>
-<button class="pathBtn" onclick="toggleHistory()">📈 Мій шлях</button>
 <a class="telegram" href="https://t.me/+JxZLoij59XBmNTBi" target="_blank">Telegram</a>
 </div>
 </div>
@@ -410,6 +389,7 @@ cursor:pointer;
 <div class="progressWrap">
 <div class="progress" id="bar"></div>
 </div>
+
 <div class="progressText" id="progText">0% до цілі</div>
 
 <div id="warnBox"></div>
@@ -438,6 +418,10 @@ cursor:pointer;
 <tbody id="planRows"></tbody>
 </table>
 
+<button class="pathBtn" id="pathButton" onclick="toggleHistory()" style="display:none;">
+📈 Мій шлях
+</button>
+
 <div id="historyBox">
 <table>
 <thead>
@@ -456,14 +440,6 @@ Trade Cuberz © 2026
 </footer>
 
 </div>
-</div>
-
-<!-- MOBILE BOTTOM APP MENU -->
-<div class="mobileNav">
-<button class="n1" onclick="toggleTheme()">🌙</button>
-<button class="n2" onclick="exportCSV()">Excel</button>
-<button class="n3" onclick="toggleHistory()">Шлях</button>
-<a class="n4" href="https://t.me/+JxZLoij59XBmNTBi" target="_blank">TG</a>
 </div>
 
 <script>
@@ -485,7 +461,6 @@ if(b==="binarium") return 25;
 if(cur==="$") return 1;
 if(cur==="€") return 1;
 if(cur==="zł") return 5;
-
 return 1;
 }
 
@@ -533,7 +508,6 @@ let html="";
 let warning=false;
 
 for(let i=0;i<levels.length;i++){
-
 let raw=current*(levels[i]/100);
 let stake=Math.max(raw,min);
 
@@ -559,7 +533,6 @@ warning?'<div class="warn">Баланс малий для точних став�
 }
 
 function renderPlan(){
-
 let html="";
 let bal=current;
 
@@ -624,7 +597,9 @@ historyBox.style.display=
 }
 
 function renderHistory(){
+
 let html="";
+
 for(let i=0;i<history.length;i++){
 html+=`
 <tr>
@@ -634,7 +609,11 @@ html+=`
 </tr>
 `;
 }
+
 historyRows.innerHTML=html;
+
+/* кнопка з'являється тільки якщо є історія */
+pathButton.style.display = history.length>0 ? "block" : "none";
 }
 
 function saveAll(){
@@ -650,7 +629,6 @@ current,target,totalDays,doneDays,history
 }
 
 function loadAll(){
-
 let d=JSON.parse(localStorage.getItem("tradeRealPro")||"{}");
 
 broker.value=d.broker||"pocket";
@@ -668,6 +646,8 @@ history=d.history||[];
 
 if(current>0&&target>0&&totalDays>0){
 renderAll();
+}else{
+renderHistory();
 }
 }
 
