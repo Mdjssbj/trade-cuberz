@@ -3,19 +3,19 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Trade Cuberz</title>
+<title>Trade Cuberz Stable Final</title>
 
 <style>
 *{
 margin:0;
 padding:0;
 box-sizing:border-box;
-font-family:Arial, sans-serif;
+font-family:Arial,sans-serif;
 }
 
 body{
 background:#081225;
-color:white;
+color:#fff;
 padding:20px;
 }
 
@@ -112,7 +112,6 @@ color:#8ea3d8;
 
 .green{color:#18f58b;}
 .gold{color:#ffd84d;}
-.red{color:#ff6464;}
 
 .stats{
 display:grid;
@@ -147,10 +146,6 @@ font-weight:700;
 width:160px;
 padding:10px;
 font-size:16px;
-}
-
-.hidden{
-display:none;
 }
 </style>
 </head>
@@ -266,22 +261,22 @@ function minTrade(){
 let broker=document.getElementById("broker").value;
 let c=cur();
 
-if(c=="₴"){
-if(broker=="pocket") return 50;
-if(broker=="binarium") return 25;
+if(c==="₴"){
+if(broker==="pocket") return 50;
+if(broker==="binarium") return 25;
 }
 
-if(c=="$") return 1;
-if(c=="€") return 1;
-if(c=="zł") return 5;
+if(c==="$") return 1;
+if(c==="€") return 1;
+if(c==="zł") return 5;
 
 return 1;
 }
 
 function createPlan(){
 
-current=parseFloat(document.getElementById("start").value)||0;
-target=parseFloat(document.getElementById("goal").value)||0;
+current=Number(document.getElementById("start").value)||0;
+target=Number(document.getElementById("goal").value)||0;
 totalDays=parseInt(document.getElementById("days").value)||0;
 doneDays=0;
 
@@ -289,14 +284,13 @@ renderAll();
 }
 
 function renderAll(){
+if(current<=0||target<=0||totalDays<=0)return;
 renderStats();
 renderSteps();
 renderPlan();
 }
 
 function renderStats(){
-
-if(current<=0 || target<=0 || totalDays<=0)return;
 
 let left=Math.max(totalDays-doneDays,1);
 
@@ -309,7 +303,7 @@ document.getElementById("left").innerText=totalDays-doneDays;
 
 function renderSteps(){
 
-let payout=(parseFloat(document.getElementById("payout").value)||80)/100;
+let payout=(Number(document.getElementById("payout").value)||80)/100;
 let min=minTrade();
 let dayGoal=current*(rate/100);
 
@@ -319,7 +313,7 @@ let warning=false;
 for(let i=0;i<levels.length;i++){
 
 let raw=current*(levels[i]/100);
-let stake=raw<min ? min : raw;
+let stake=Math.max(raw,min);
 
 if(raw<min) warning=true;
 
@@ -338,14 +332,8 @@ html+=`
 
 document.getElementById("stepsRows").innerHTML=html;
 
-if(warning){
-document.getElementById("warnBox").innerHTML=`
-<div class="warn">
-Баланс малий для точних ставок %. Брокер застосував мінімальну угоду.
-</div>`;
-}else{
-document.getElementById("warnBox").innerHTML="";
-}
+document.getElementById("warnBox").innerHTML=
+warning ? `<div class="warn">Баланс малий для точних ставок %. Використано мінімальні угоди брокера.</div>` : "";
 }
 
 function renderPlan(){
@@ -361,12 +349,8 @@ html+=`
 <tr>
 <td>День ${i}</td>
 <td class="gold">${cur()}${Math.round(bal)}</td>
-<td>
-<input class="smallInput" id="real${i}" placeholder="+4200 або -200">
-</td>
-<td>
-<input type="checkbox" onchange="finishDay(${i},this)">
-</td>
+<td><input class="smallInput" id="real${i}" placeholder="+4200 або -200"></td>
+<td><input type="checkbox" onchange="finishDay(${i},this)"></td>
 </tr>
 `;
 }
@@ -380,12 +364,12 @@ if(!box.checked)return;
 
 let val=document.getElementById("real"+day).value.trim();
 
-if(val==""){
+if(val===""){
 box.checked=false;
 return;
 }
 
-let num=parseFloat(val);
+let num=Number(val);
 
 if(isNaN(num)){
 box.checked=false;
@@ -398,7 +382,7 @@ current=current+num;
 current=num;
 }
 
-if(current<1) current=1;
+current=Math.max(current,1);
 
 doneDays++;
 
