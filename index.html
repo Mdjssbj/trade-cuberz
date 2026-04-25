@@ -230,11 +230,15 @@ color:var(--muted);
 font-size:16px
 }
 
-/* MOBILE FIX */
-@media (max-width:700px){
+/* MOBILE APP STYLE */
+.mobileNav{
+display:none;
+}
+
+@media(max-width:700px){
 
 body{
-padding:12px;
+padding:12px 12px 90px 12px;
 }
 
 .card{
@@ -243,9 +247,7 @@ border-radius:18px;
 }
 
 .top{
-flex-direction:column;
-align-items:flex-start;
-gap:12px;
+display:block;
 }
 
 .logo{
@@ -255,23 +257,11 @@ line-height:1.05;
 
 .sub{
 font-size:15px;
-margin-top:4px;
+margin-top:6px;
 }
 
 .topBtns{
-width:100%;
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:8px;
-}
-
-.topBtns button,
-.topBtns a{
-padding:11px;
-font-size:14px;
-border-radius:12px;
-text-align:center;
-width:100%;
+display:none;
 }
 
 .grid{
@@ -280,43 +270,22 @@ gap:10px;
 margin-top:14px;
 }
 
-label{
-font-size:14px;
-margin-bottom:5px;
-}
-
-input,select{
-padding:13px;
-font-size:17px;
-}
-
 .actions{
 grid-template-columns:1fr;
 gap:10px;
-margin-top:14px;
-}
-
-button.main,
-button.gray{
-width:100%;
-padding:13px;
-font-size:17px;
 }
 
 .stats{
 grid-template-columns:1fr 1fr;
 gap:10px;
-margin-top:16px;
 }
 
 .box{
 padding:14px;
-border-radius:14px;
 }
 
 .big{
 font-size:24px;
-margin-bottom:6px;
 }
 
 table{
@@ -324,34 +293,44 @@ display:block;
 overflow-x:auto;
 white-space:nowrap;
 font-size:14px;
-margin-top:16px;
-}
-
-th,td{
-padding:10px;
 }
 
 .smallInput{
 width:140px;
-padding:9px;
-font-size:15px;
 }
 
-.progressWrap{
-margin-top:14px;
-height:14px;
+.mobileNav{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:8px;
+position:fixed;
+left:10px;
+right:10px;
+bottom:10px;
+background:var(--card);
+padding:10px;
+border-radius:18px;
+box-shadow:0 10px 30px rgba(0,0,0,.35);
+z-index:999;
 }
 
-.progressText{
-font-size:13px;
-margin-top:6px;
+.mobileNav button,
+.mobileNav a{
+border:none;
+padding:10px 6px;
+border-radius:12px;
+font-size:12px;
+font-weight:700;
+text-align:center;
+text-decoration:none;
+color:#fff;
+cursor:pointer;
 }
 
-footer{
-font-size:14px;
-margin-top:18px;
-padding-bottom:8px;
-}
+.mobileNav .n1{background:#6b7fb3}
+.mobileNav .n2{background:#16a34a}
+.mobileNav .n3{background:#ff8a00}
+.mobileNav .n4{background:#2f78ff}
 }
 </style>
 </head>
@@ -479,6 +458,14 @@ Trade Cuberz © 2026
 </div>
 </div>
 
+<!-- MOBILE BOTTOM APP MENU -->
+<div class="mobileNav">
+<button class="n1" onclick="toggleTheme()">🌙</button>
+<button class="n2" onclick="exportCSV()">Excel</button>
+<button class="n3" onclick="toggleHistory()">Шлях</button>
+<a class="n4" href="https://t.me/+JxZLoij59XBmNTBi" target="_blank">TG</a>
+</div>
+
 <script>
 let current=0,target=0,totalDays=0,doneDays=0,rate=0;
 let history=[];
@@ -538,7 +525,6 @@ saveAll();
 }
 
 function renderSteps(){
-
 let payoutVal=(Number(payout.value)||80)/100;
 let min=minTrade();
 let dayGoal=current*(rate/100);
@@ -638,9 +624,7 @@ historyBox.style.display=
 }
 
 function renderHistory(){
-
 let html="";
-
 for(let i=0;i<history.length;i++){
 html+=`
 <tr>
@@ -650,7 +634,6 @@ html+=`
 </tr>
 `;
 }
-
 historyRows.innerHTML=html;
 }
 
@@ -662,11 +645,7 @@ start:start.value,
 goal:goal.value,
 days:days.value,
 payout:payout.value,
-current,
-target,
-totalDays,
-doneDays,
-history
+current,target,totalDays,doneDays,history
 }));
 }
 
