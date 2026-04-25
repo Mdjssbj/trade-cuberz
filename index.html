@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>TRADE CUBERZ CLOUD</title>
+<title>TRADE CUBERZ</title>
 
 <style>
 *{
@@ -14,10 +14,13 @@ font-family:Arial,Helvetica,sans-serif;
 }
 
 body{
-background:linear-gradient(135deg,#07111f,#0d1730,#132247);
+background:
+radial-gradient(circle at top right,#1c2c68 0%,transparent 30%),
+radial-gradient(circle at left,#10203e 0%,transparent 25%),
+linear-gradient(135deg,#050913,#091423,#0d1f38);
 color:#fff;
 min-height:100vh;
-padding:20px;
+padding:18px;
 }
 
 .container{
@@ -26,11 +29,12 @@ margin:auto;
 }
 
 .card{
-background:rgba(255,255,255,.04);
-padding:28px;
-border-radius:24px;
+background:rgba(255,255,255,.03);
 border:1px solid rgba(255,255,255,.06);
-backdrop-filter:blur(12px);
+backdrop-filter:blur(14px);
+border-radius:26px;
+padding:26px;
+box-shadow:0 0 40px rgba(0,0,0,.35);
 }
 
 .top{
@@ -39,33 +43,46 @@ justify-content:space-between;
 align-items:center;
 gap:15px;
 flex-wrap:wrap;
-margin-bottom:25px;
+margin-bottom:24px;
 }
 
 .logo{
-font-size:46px;
+font-size:44px;
 font-weight:900;
-background:linear-gradient(90deg,#18f58b,#2f78ff,#9f2dff);
+letter-spacing:1px;
+background:linear-gradient(90deg,#f0b90b,#38bdf8,#8b5cf6);
 -webkit-background-clip:text;
 -webkit-text-fill-color:transparent;
 }
 
 .sub{
-color:#8ea3d8;
 margin-top:8px;
-font-size:20px;
+font-size:18px;
+color:#8ea3d8;
 }
 
-.user{
+.topRight{
 display:flex;
+gap:10px;
 align-items:center;
-gap:12px;
+flex-wrap:wrap;
 }
 
-.user img{
-width:46px;
-height:46px;
-border-radius:50%;
+.badge{
+padding:10px 16px;
+border-radius:14px;
+background:#111f3f;
+color:#f0b90b;
+font-weight:800;
+}
+
+.telegram{
+padding:12px 18px;
+border-radius:14px;
+background:linear-gradient(90deg,#2563eb,#7c3aed);
+text-decoration:none;
+color:#fff;
+font-weight:800;
 }
 
 .grid{
@@ -78,7 +95,7 @@ label{
 display:block;
 margin-bottom:7px;
 font-size:14px;
-color:#9db0da;
+color:#8ea3d8;
 }
 
 input,select{
@@ -87,9 +104,9 @@ padding:14px;
 border:none;
 outline:none;
 border-radius:14px;
-background:#192746;
+background:#101c36;
 color:#fff;
-font-size:17px;
+font-size:16px;
 }
 
 .actions{
@@ -103,79 +120,81 @@ button{
 padding:15px;
 border:none;
 border-radius:14px;
-font-size:18px;
+font-size:17px;
 font-weight:900;
 cursor:pointer;
 color:#fff;
 }
 
 .mainBtn{
-background:linear-gradient(90deg,#2f78ff,#982cff);
+background:linear-gradient(90deg,#f0b90b,#f59e0b);
+color:#111;
 }
 
-.grayBtn{
-background:#24345f;
+.altBtn{
+background:#17274b;
 }
 
 .stats{
 display:grid;
 grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
 gap:14px;
-margin-top:24px;
+margin-top:22px;
 }
 
 .box{
-background:#09173a;
-padding:22px;
-border-radius:20px;
-text-align:center;
+background:#0d1934;
+padding:20px;
+border-radius:18px;
+border:1px solid rgba(255,255,255,.04);
 }
 
 .big{
-font-size:34px;
+font-size:30px;
 font-weight:900;
-margin-bottom:8px;
+margin-bottom:6px;
 }
 
-.green{color:#18f58b;}
-.blue{color:#3ec3ff;}
-.gold{color:#ffd84d;}
+.gold{color:#f0b90b;}
+.green{color:#22c55e;}
+.blue{color:#38bdf8;}
+.purple{color:#a78bfa;}
 
 .progressWrap{
-margin-top:20px;
-height:18px;
-background:#10204a;
-border-radius:30px;
+margin-top:18px;
+height:16px;
+background:#101f3d;
+border-radius:40px;
 overflow:hidden;
 }
 
 .progress{
 height:100%;
 width:0%;
-background:linear-gradient(90deg,#18f58b,#2f78ff);
-transition:.5s;
+background:linear-gradient(90deg,#f0b90b,#38bdf8,#8b5cf6);
+transition:.6s;
 }
 
 .progressText{
-margin-top:10px;
-font-size:14px;
-color:#9db0da;
+margin-top:8px;
+font-size:13px;
+color:#8ea3d8;
 }
 
 .section{
 margin-top:26px;
-font-size:22px;
+margin-bottom:10px;
+font-size:20px;
 font-weight:900;
 }
 
 .dayList{
 display:grid;
 gap:12px;
-margin-top:14px;
 }
 
 .dayCard{
-background:#0e1a39;
+background:#0c1730;
 padding:18px;
 border-radius:18px;
 }
@@ -194,23 +213,28 @@ margin-top:8px;
 }
 
 .dayBtn{
-width:100%;
 margin-top:10px;
+width:100%;
 padding:12px;
 border:none;
 border-radius:12px;
 font-weight:900;
-background:linear-gradient(90deg,#2f78ff,#982cff);
+background:linear-gradient(90deg,#2563eb,#7c3aed);
 color:#fff;
 cursor:pointer;
 }
 
 footer{
-margin-top:35px;
+margin-top:28px;
 text-align:center;
-color:#7f93be;
-font-size:26px;
-padding:20px;
+color:#6f84b8;
+font-size:15px;
+padding:12px;
+}
+
+@media(max-width:600px){
+.logo{font-size:30px}
+.sub{font-size:15px}
 }
 </style>
 </head>
@@ -222,11 +246,12 @@ padding:20px;
 <div class="top">
 <div>
 <div class="logo">TRADE CUBERZ</div>
-<div class="sub">Cloud Trading Calculator</div>
+<div class="sub">Crypto Futuristic Trading Planner</div>
 </div>
 
-<div class="user" id="userBox">
-Завантаження...
+<div class="topRight">
+<div class="badge" id="rankBox">Beginner Trader</div>
+<a class="telegram" href="https://t.me/+JxZLoij59XBmNTBi" target="_blank">Telegram</a>
 </div>
 </div>
 
@@ -261,42 +286,46 @@ padding:20px;
 </div>
 
 <div>
-<label>Днів</label>
+<label>Кількість днів</label>
 <input type="number" id="days">
 </div>
 
 <div>
-<label>Payout %</label>
-<input type="number" id="payout" value="80">
+<label>Режим</label>
+<select id="mode">
+<option value="safe">Safe</option>
+<option value="normal" selected>Normal</option>
+<option value="aggressive">Aggressive</option>
+</select>
 </div>
 
 </div>
 
 <div class="actions">
 <button class="mainBtn" onclick="createPlan()">Створити план</button>
-<button class="grayBtn" onclick="logout()">Вийти</button>
+<button class="altBtn" onclick="resetAll()">Очистити</button>
 </div>
 
 <div class="stats">
 
 <div class="box">
 <div class="big green" id="daily">0%</div>
-<div>Денний %</div>
+<div>Денний ріст</div>
 </div>
 
 <div class="box">
-<div class="big blue" id="profitDay">0</div>
+<div class="big blue" id="profit">0</div>
 <div>Прибуток / день</div>
 </div>
 
 <div class="box">
-<div class="big gold" id="nowbal">0</div>
+<div class="big gold" id="balance">0</div>
 <div>Баланс</div>
 </div>
 
 <div class="box">
-<div class="big gold" id="left">0</div>
-<div>Лишилось днів</div>
+<div class="big purple" id="streak">0</div>
+<div>Streak</div>
 </div>
 
 </div>
@@ -307,139 +336,91 @@ padding:20px;
 
 <div class="progressText" id="progText">0% до цілі</div>
 
-<div class="section">План</div>
+<div class="section">План по днях</div>
 <div class="dayList" id="planRows"></div>
 
 <footer>
-Trade Cuberz © 2026
+TRADE CUBERZ
 </footer>
 
 </div>
 </div>
 
-<script type="module">
+<script>
+let current=0,target=0,totalDays=0,doneDays=0,rate=0,streakDays=0;
 
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import {
-getAuth,
-GoogleAuthProvider,
-signInWithPopup,
-onAuthStateChanged,
-signOut
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-
-import {
-getDatabase,
-ref,
-set,
-get
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
-
-const firebaseConfig = {
-apiKey: "AIzaSyAkRcrT1tBpKTePz00ySBwCx4LhWTL9Umk",
-authDomain: "trade-cuberz.firebaseapp.com",
-databaseURL: "https://trade-cuberz-default-rtdb.europe-west1.firebasedatabase.app",
-projectId: "trade-cuberz",
-storageBucket: "trade-cuberz.firebasestorage.app",
-messagingSenderId: "750359203953",
-appId: "1:750359203953:web:8f8dec225e9f655cdb0bd0"
-};
-
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getDatabase(app);
-const provider = new GoogleAuthProvider();
-
-let userId="";
-let current=0,target=0,totalDays=0,doneDays=0,rate=0;
-
-onAuthStateChanged(auth, async(user)=>{
-
-if(user){
-
-userId=user.uid;
-
-userBox.innerHTML=`
-<img src="${user.photoURL}">
-<div>${user.displayName}</div>
-`;
-
-loadData();
-
-}else{
-
-await signInWithPopup(auth,provider);
-
+function c(){
+return currency.value;
 }
 
-});
-
-async function saveData(){
-
-await set(ref(db,"users/"+userId),{
+function save(){
+localStorage.setItem("v3wow",JSON.stringify({
 broker:broker.value,
 currency:currency.value,
 start:start.value,
 goal:goal.value,
 days:days.value,
-payout:payout.value,
+mode:mode.value,
 current,
-doneDays
-});
-
+doneDays,
+streakDays
+}));
 }
 
-async function loadData(){
-
-const snap = await get(ref(db,"users/"+userId));
-
-if(snap.exists()){
-
-let d=snap.val();
+function load(){
+let d=JSON.parse(localStorage.getItem("v3wow")||"{}");
 
 broker.value=d.broker||"pocket";
 currency.value=d.currency||"₴";
 start.value=d.start||"";
 goal.value=d.goal||"";
 days.value=d.days||"";
-payout.value=d.payout||80;
+mode.value=d.mode||"normal";
 current=d.current||0;
 doneDays=d.doneDays||0;
+streakDays=d.streakDays||0;
 
 if(current>0){
 target=Number(goal.value);
 totalDays=Number(days.value);
 renderAll();
 }
-
 }
 
+function resetAll(){
+localStorage.clear();
+location.reload();
 }
 
-window.createPlan=function(){
+function createPlan(){
 
 current=Number(start.value)||0;
 target=Number(goal.value)||0;
 totalDays=Number(days.value)||0;
 doneDays=0;
+streakDays=0;
 
 renderAll();
-saveData();
-
+save();
 }
 
 function renderAll(){
 
-let leftDays=Math.max(totalDays-doneDays,1);
+if(current<=0||target<=0||totalDays<=0)return;
 
-rate=(Math.pow(target/current,1/leftDays)-1)*100;
+let left=Math.max(totalDays-doneDays,1);
 
-let dayProfit=current*(rate/100);
+rate=(Math.pow(target/current,1/left)-1)*100;
+
+if(mode.value==="safe") rate*=0.8;
+if(mode.value==="aggressive") rate*=1.2;
+
+let profitDay=current*(rate/100);
 
 daily.innerText=rate.toFixed(2)+"%";
-profitDay.innerText=Math.round(dayProfit);
-nowbal.innerText=Math.round(current);
-left.innerText=totalDays-doneDays;
+profit.innerText=c()+Math.round(profitDay);
+balance.innerText=c()+Math.round(current);
+streak.innerText=streakDays+"🔥";
 
 let progress=(current/target)*100;
 if(progress>100)progress=100;
@@ -447,9 +428,12 @@ if(progress>100)progress=100;
 bar.style.width=progress+"%";
 progText.innerText=progress.toFixed(1)+"% до цілі";
 
-renderPlan();
-saveData();
+if(progress<30) rankBox.innerText="Beginner Trader";
+else if(progress<70) rankBox.innerText="Rising Bull";
+else rankBox.innerText="Profit Beast";
 
+renderPlan();
+save();
 }
 
 function renderPlan(){
@@ -466,7 +450,7 @@ html+=`
 
 <div class="row">
 <div><b>День ${i}</b></div>
-<div>${Math.round(bal)}</div>
+<div class="gold">${c()}${Math.round(bal)}</div>
 </div>
 
 <input class="smallInput" id="real${i}" placeholder="Баланс або -збиток">
@@ -478,16 +462,18 @@ html+=`
 }
 
 planRows.innerHTML=html;
-
 }
 
-window.finishDay=function(day){
+function finishDay(day){
 
 let val=document.getElementById("real"+day).value.trim();
-
 if(val==="") return;
 
 let num=Number(val);
+if(isNaN(num)) return;
+
+if(num>=current) streakDays++;
+else streakDays=0;
 
 if(num<0){
 current=current+num;
@@ -495,16 +481,14 @@ current=current+num;
 current=num;
 }
 
+if(current<1) current=1;
+
 doneDays++;
 
 renderAll();
-
 }
 
-window.logout=function(){
-signOut(auth);
-}
-
+load();
 </script>
 
 </body>
