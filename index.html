@@ -20,14 +20,14 @@
 }
 
 body.light{
---bg:#eef4ff;
+--bg:#f3f6fc;
 --card:#ffffff;
---card2:#dfe8ff;
---text:#111111;
---muted:#40557c;
---line:rgba(0,0,0,.10);
---warnBg:#ffe6e6;
---warnText:#c62828;
+--card2:#ffffff;
+--text:#16233d;
+--muted:#5b6e92;
+--line:rgba(0,0,0,.08);
+--warnBg:#fff1f1;
+--warnText:#d32f2f;
 }
 
 body{
@@ -57,7 +57,9 @@ flex-wrap:wrap
 .logo{
 font-size:42px;
 font-weight:900;
-color:#18f58b
+background:linear-gradient(90deg,#18f58b,#2f78ff);
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
 }
 
 .sub{
@@ -106,7 +108,14 @@ border:none;
 border-radius:12px;
 background:var(--card2);
 color:var(--text);
-font-size:18px
+font-size:18px;
+outline:none;
+}
+
+body.light input,
+body.light select{
+border:1px solid #d9e2f2;
+box-shadow:0 4px 12px rgba(0,0,0,.04);
 }
 
 .actions{
@@ -221,10 +230,128 @@ color:var(--muted);
 font-size:16px
 }
 
-@media(max-width:700px){
-.logo{font-size:32px}
-.smallInput{width:100%}
-table{font-size:14px}
+/* MOBILE FIX */
+@media (max-width:700px){
+
+body{
+padding:12px;
+}
+
+.card{
+padding:16px;
+border-radius:18px;
+}
+
+.top{
+flex-direction:column;
+align-items:flex-start;
+gap:12px;
+}
+
+.logo{
+font-size:30px;
+line-height:1.05;
+}
+
+.sub{
+font-size:15px;
+margin-top:4px;
+}
+
+.topBtns{
+width:100%;
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:8px;
+}
+
+.topBtns button,
+.topBtns a{
+padding:11px;
+font-size:14px;
+border-radius:12px;
+text-align:center;
+width:100%;
+}
+
+.grid{
+grid-template-columns:1fr;
+gap:10px;
+margin-top:14px;
+}
+
+label{
+font-size:14px;
+margin-bottom:5px;
+}
+
+input,select{
+padding:13px;
+font-size:17px;
+}
+
+.actions{
+grid-template-columns:1fr;
+gap:10px;
+margin-top:14px;
+}
+
+button.main,
+button.gray{
+width:100%;
+padding:13px;
+font-size:17px;
+}
+
+.stats{
+grid-template-columns:1fr 1fr;
+gap:10px;
+margin-top:16px;
+}
+
+.box{
+padding:14px;
+border-radius:14px;
+}
+
+.big{
+font-size:24px;
+margin-bottom:6px;
+}
+
+table{
+display:block;
+overflow-x:auto;
+white-space:nowrap;
+font-size:14px;
+margin-top:16px;
+}
+
+th,td{
+padding:10px;
+}
+
+.smallInput{
+width:140px;
+padding:9px;
+font-size:15px;
+}
+
+.progressWrap{
+margin-top:14px;
+height:14px;
+}
+
+.progressText{
+font-size:13px;
+margin-top:6px;
+}
+
+footer{
+font-size:14px;
+margin-top:18px;
+padding-bottom:8px;
+}
 }
 </style>
 </head>
@@ -386,7 +513,6 @@ saveAll();
 }
 
 function renderAll(){
-
 if(current<=0||target<=0||totalDays<=0)return;
 
 let leftDays=Math.max(totalDays-doneDays,1);
