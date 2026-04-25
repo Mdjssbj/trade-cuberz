@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>TRADE CUBERZ</title>
+<title>TRADE CUBERZ CLOUD</title>
 
 <style>
 *{
@@ -13,30 +13,11 @@ box-sizing:border-box;
 font-family:Arial,Helvetica,sans-serif;
 }
 
-:root{
---bg1:#07111f;
---bg2:#0e1b34;
---card:#0e1a39;
---card2:#142448;
---text:#ffffff;
---muted:#95a7d3;
-}
-
-body.light{
---bg1:#edf3ff;
---bg2:#dfe8ff;
---card:#ffffff;
---card2:#f5f8ff;
---text:#111;
---muted:#52617e;
-}
-
 body{
-background:linear-gradient(135deg,var(--bg1),var(--bg2));
+background:linear-gradient(135deg,#07111f,#0d1730,#132247);
+color:#fff;
 min-height:100vh;
 padding:20px;
-color:var(--text);
-transition:.3s;
 }
 
 .container{
@@ -45,7 +26,7 @@ margin:auto;
 }
 
 .card{
-background:rgba(255,255,255,.03);
+background:rgba(255,255,255,.04);
 padding:28px;
 border-radius:24px;
 border:1px solid rgba(255,255,255,.06);
@@ -62,7 +43,7 @@ margin-bottom:25px;
 }
 
 .logo{
-font-size:48px;
+font-size:46px;
 font-weight:900;
 background:linear-gradient(90deg,#18f58b,#2f78ff,#9f2dff);
 -webkit-background-clip:text;
@@ -70,30 +51,21 @@ background:linear-gradient(90deg,#18f58b,#2f78ff,#9f2dff);
 }
 
 .sub{
+color:#8ea3d8;
 margin-top:8px;
-color:var(--muted);
-font-size:22px;
+font-size:20px;
 }
 
-.rightTop{
+.user{
 display:flex;
-gap:10px;
-flex-wrap:wrap;
+align-items:center;
+gap:12px;
 }
 
-.telegram,.themeBtn{
-text-decoration:none;
-padding:14px 22px;
-border-radius:14px;
-font-weight:800;
-border:none;
-cursor:pointer;
-color:#fff;
-background:linear-gradient(90deg,#2f78ff,#6a4dff);
-}
-
-.themeBtn{
-background:#253762;
+.user img{
+width:46px;
+height:46px;
+border-radius:50%;
 }
 
 .grid{
@@ -106,7 +78,7 @@ label{
 display:block;
 margin-bottom:7px;
 font-size:14px;
-color:var(--muted);
+color:#9db0da;
 }
 
 input,select{
@@ -115,8 +87,8 @@ padding:14px;
 border:none;
 outline:none;
 border-radius:14px;
-background:var(--card2);
-color:var(--text);
+background:#192746;
+color:#fff;
 font-size:17px;
 }
 
@@ -127,7 +99,7 @@ gap:14px;
 margin-top:18px;
 }
 
-button.mainBtn{
+button{
 padding:15px;
 border:none;
 border-radius:14px;
@@ -135,17 +107,13 @@ font-size:18px;
 font-weight:900;
 cursor:pointer;
 color:#fff;
+}
+
+.mainBtn{
 background:linear-gradient(90deg,#2f78ff,#982cff);
 }
 
-button.grayBtn{
-padding:15px;
-border:none;
-border-radius:14px;
-font-size:18px;
-font-weight:900;
-cursor:pointer;
-color:#fff;
+.grayBtn{
 background:#24345f;
 }
 
@@ -157,7 +125,7 @@ margin-top:24px;
 }
 
 .box{
-background:var(--card);
+background:#09173a;
 padding:22px;
 border-radius:20px;
 text-align:center;
@@ -170,7 +138,7 @@ margin-bottom:8px;
 }
 
 .green{color:#18f58b;}
-.blue{color:#39c3ff;}
+.blue{color:#3ec3ff;}
 .gold{color:#ffd84d;}
 
 .progressWrap{
@@ -190,27 +158,24 @@ transition:.5s;
 
 .progressText{
 margin-top:10px;
-color:var(--muted);
 font-size:14px;
+color:#9db0da;
 }
 
-.warn{
-margin-top:18px;
-padding:16px;
-border-radius:16px;
-background:#451d25;
-color:#ff7a7a;
-font-weight:800;
+.section{
+margin-top:26px;
+font-size:22px;
+font-weight:900;
 }
 
-.dayList,.historyList{
+.dayList{
 display:grid;
 gap:12px;
-margin-top:22px;
+margin-top:14px;
 }
 
-.dayCard,.historyCard{
-background:var(--card);
+.dayCard{
+background:#0e1a39;
 padding:18px;
 border-radius:18px;
 }
@@ -229,36 +194,23 @@ margin-top:8px;
 }
 
 .dayBtn{
-margin-top:10px;
 width:100%;
+margin-top:10px;
 padding:12px;
 border:none;
 border-radius:12px;
-font-weight:800;
-color:#fff;
-background:linear-gradient(90deg,#2f78ff,#982cff);
-cursor:pointer;
-}
-
-.sectionTitle{
-margin-top:26px;
-margin-bottom:10px;
-font-size:20px;
 font-weight:900;
+background:linear-gradient(90deg,#2f78ff,#982cff);
+color:#fff;
+cursor:pointer;
 }
 
 footer{
 margin-top:35px;
 text-align:center;
-color:var(--muted);
+color:#7f93be;
 font-size:26px;
 padding:20px;
-}
-
-@media(max-width:600px){
-.logo{font-size:34px}
-.sub{font-size:18px}
-footer{font-size:18px}
 }
 </style>
 </head>
@@ -270,12 +222,11 @@ footer{font-size:18px}
 <div class="top">
 <div>
 <div class="logo">TRADE CUBERZ</div>
-<div class="sub">Професійний торговий калькулятор</div>
+<div class="sub">Cloud Trading Calculator</div>
 </div>
 
-<div class="rightTop">
-<button class="themeBtn" onclick="toggleTheme()">🌙 / ☀️</button>
-<a class="telegram" href="https://t.me/+JxZLoij59XBmNTBi" target="_blank">Telegram</a>
+<div class="user" id="userBox">
+Завантаження...
 </div>
 </div>
 
@@ -310,7 +261,7 @@ footer{font-size:18px}
 </div>
 
 <div>
-<label>Кількість днів</label>
+<label>Днів</label>
 <input type="number" id="days">
 </div>
 
@@ -323,7 +274,7 @@ footer{font-size:18px}
 
 <div class="actions">
 <button class="mainBtn" onclick="createPlan()">Створити план</button>
-<button class="grayBtn" onclick="resetAll()">Очистити</button>
+<button class="grayBtn" onclick="logout()">Вийти</button>
 </div>
 
 <div class="stats">
@@ -356,13 +307,8 @@ footer{font-size:18px}
 
 <div class="progressText" id="progText">0% до цілі</div>
 
-<div id="warnBox"></div>
-
-<div class="sectionTitle">План по днях</div>
+<div class="section">План</div>
 <div class="dayList" id="planRows"></div>
-
-<div class="sectionTitle">Мій шлях</div>
-<div class="historyList" id="historyRows"></div>
 
 <footer>
 Trade Cuberz © 2026
@@ -371,61 +317,85 @@ Trade Cuberz © 2026
 </div>
 </div>
 
-<script>
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import {
+getAuth,
+GoogleAuthProvider,
+signInWithPopup,
+onAuthStateChanged,
+signOut
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+import {
+getDatabase,
+ref,
+set,
+get
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+const firebaseConfig = {
+apiKey: "AIzaSyAkRcrT1tBpKTePz00ySBwCx4LhWTL9Umk",
+authDomain: "trade-cuberz.firebaseapp.com",
+databaseURL: "https://trade-cuberz-default-rtdb.europe-west1.firebasedatabase.app",
+projectId: "trade-cuberz",
+storageBucket: "trade-cuberz.firebasestorage.app",
+messagingSenderId: "750359203953",
+appId: "1:750359203953:web:8f8dec225e9f655cdb0bd0"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getDatabase(app);
+const provider = new GoogleAuthProvider();
+
+let userId="";
 let current=0,target=0,totalDays=0,doneDays=0,rate=0;
-let history=[];
 
-function c(){
-return currency.value;
+onAuthStateChanged(auth, async(user)=>{
+
+if(user){
+
+userId=user.uid;
+
+userBox.innerHTML=`
+<img src="${user.photoURL}">
+<div>${user.displayName}</div>
+`;
+
+loadData();
+
+}else{
+
+await signInWithPopup(auth,provider);
+
 }
 
-function round(n){
-return Math.round(n);
-}
+});
 
-function toggleTheme(){
-document.body.classList.toggle("light");
-localStorage.setItem("theme",
-document.body.classList.contains("light")?"light":"dark");
-}
+async function saveData(){
 
-function loadTheme(){
-if(localStorage.getItem("theme")==="light"){
-document.body.classList.add("light");
-}
-}
-
-function minTrade(){
-let b=broker.value;
-let cur=currency.value;
-
-if(cur==="₴"){
-if(b==="pocket") return 50;
-if(b==="binarium") return 25;
-}
-if(cur==="$") return 1;
-if(cur==="€") return 1;
-if(cur==="zł") return 5;
-
-return 1;
-}
-
-function save(){
-localStorage.setItem("tradeFinal",JSON.stringify({
+await set(ref(db,"users/"+userId),{
 broker:broker.value,
 currency:currency.value,
 start:start.value,
 goal:goal.value,
 days:days.value,
 payout:payout.value,
-history:history,
-current:current,
-doneDays:doneDays
-}));
+current,
+doneDays
+});
+
 }
 
-function load(){
-let d=JSON.parse(localStorage.getItem("tradeFinal")||"{}");
+async function loadData(){
+
+const snap = await get(ref(db,"users/"+userId));
+
+if(snap.exists()){
+
+let d=snap.val();
 
 broker.value=d.broker||"pocket";
 currency.value=d.currency||"₴";
@@ -433,39 +403,32 @@ start.value=d.start||"";
 goal.value=d.goal||"";
 days.value=d.days||"";
 payout.value=d.payout||80;
-
-history=d.history||[];
 current=d.current||0;
 doneDays=d.doneDays||0;
 
 if(current>0){
-target=Number(goal.value)||0;
-totalDays=Number(days.value)||0;
+target=Number(goal.value);
+totalDays=Number(days.value);
 renderAll();
-renderHistory();
-}
 }
 
-function resetAll(){
-localStorage.clear();
-location.reload();
 }
 
-function createPlan(){
+}
+
+window.createPlan=function(){
 
 current=Number(start.value)||0;
 target=Number(goal.value)||0;
 totalDays=Number(days.value)||0;
 doneDays=0;
-history=[];
 
 renderAll();
-save();
+saveData();
+
 }
 
 function renderAll(){
-
-if(current<=0||target<=0||totalDays<=0)return;
 
 let leftDays=Math.max(totalDays-doneDays,1);
 
@@ -474,8 +437,8 @@ rate=(Math.pow(target/current,1/leftDays)-1)*100;
 let dayProfit=current*(rate/100);
 
 daily.innerText=rate.toFixed(2)+"%";
-profitDay.innerText=c()+round(dayProfit);
-nowbal.innerText=c()+round(current);
+profitDay.innerText=Math.round(dayProfit);
+nowbal.innerText=Math.round(current);
 left.innerText=totalDays-doneDays;
 
 let progress=(current/target)*100;
@@ -485,8 +448,8 @@ bar.style.width=progress+"%";
 progText.innerText=progress.toFixed(1)+"% до цілі";
 
 renderPlan();
-renderHistory();
-save();
+saveData();
+
 }
 
 function renderPlan(){
@@ -494,41 +457,19 @@ function renderPlan(){
 let html="";
 let bal=current;
 
-let payoutVal=(Number(payout.value)||80)/100;
-let min=minTrade();
-let warning=false;
-
 for(let i=doneDays+1;i<=totalDays;i++){
 
 bal=bal*(1+rate/100);
-
-let raw=current*0.02;
-let stake=Math.max(raw,min);
-
-if(raw<min)warning=true;
-
-let profit=stake*payoutVal;
-let trades=Math.ceil((current*(rate/100))/profit);
 
 html+=`
 <div class="dayCard">
 
 <div class="row">
 <div><b>День ${i}</b></div>
-<div class="gold">${c()}${round(bal)}</div>
+<div>${Math.round(bal)}</div>
 </div>
 
-<div class="row">
-<div>Ставка:</div>
-<div>${c()}${round(stake)}</div>
-</div>
-
-<div class="row">
-<div>Угод сьогодні:</div>
-<div class="green">${trades}</div>
-</div>
-
-<input class="smallInput" id="real${i}" placeholder="Введи баланс або -збиток">
+<input class="smallInput" id="real${i}" placeholder="Баланс або -збиток">
 
 <button class="dayBtn" onclick="finishDay(${i})">Закрити день</button>
 
@@ -538,11 +479,9 @@ html+=`
 
 planRows.innerHTML=html;
 
-warnBox.innerHTML=
-warning?'<div class="warn">Баланс малий для точних ставок %. Використано мінімальну ставку брокера.</div>':'';
 }
 
-function finishDay(day){
+window.finishDay=function(day){
 
 let val=document.getElementById("real"+day).value.trim();
 
@@ -550,61 +489,22 @@ if(val==="") return;
 
 let num=Number(val);
 
-if(isNaN(num)) return;
-
 if(num<0){
 current=current+num;
 }else{
 current=num;
 }
 
-if(current<1) current=1;
-
-history.push({
-day:day,
-input:val,
-balance:round(current)
-});
-
 doneDays++;
 
 renderAll();
+
 }
 
-function renderHistory(){
-
-let html="";
-
-if(history.length===0){
-html='<div class="historyCard">Історія поки порожня</div>';
-historyRows.innerHTML=html;
-return;
+window.logout=function(){
+signOut(auth);
 }
 
-for(let i=0;i<history.length;i++){
-
-html+=`
-<div class="historyCard">
-
-<div class="row">
-<div><b>День ${history[i].day}</b></div>
-<div class="gold">${c()}${history[i].balance}</div>
-</div>
-
-<div class="row">
-<div>Що ввів:</div>
-<div>${history[i].input}</div>
-</div>
-
-</div>
-`;
-}
-
-historyRows.innerHTML=html;
-}
-
-loadTheme();
-load();
 </script>
 
 </body>
